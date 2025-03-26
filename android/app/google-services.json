@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "139498252141",
+    "project_id": "travlgo-248ea",
+    "storage_bucket": "travlgo-248ea.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139498252141:android:5552b8e9ca4e4107dc5c64",
+        "android_client_info": {
+          "package_name": "com.example.travelgo_user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlXCWbkoeJfD82BGtVmcKOA9UJvHijuEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
