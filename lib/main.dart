@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:travelgo_user/features/view/screens/splash_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelgo_user/features/logic/splash/splash_bloc.dart';
+import 'package:travelgo_user/features/view/screens/landing%20page/landing_page.dart';
+import 'package:travelgo_user/features/view/screens/splash%20screen/splash_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => SplashBloc())],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -10,8 +18,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Splashscreen(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LandingPage());
   }
 }
