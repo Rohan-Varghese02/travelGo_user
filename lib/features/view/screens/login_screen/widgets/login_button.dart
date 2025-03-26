@@ -2,15 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 
-class LongButton extends StatelessWidget {
+class LoginButton extends StatelessWidget {
   final String text;
   final void Function() onPressed;
-  const LongButton({super.key, required this.text, required this.onPressed});
+  final TextEditingController emailController;
+  final TextEditingController passController;
+  const LoginButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    required this.emailController,
+    required this.passController,
+  });
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width * 0.95;
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: Size(width, 60),

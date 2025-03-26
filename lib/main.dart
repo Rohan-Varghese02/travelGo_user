@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/splash/splash_bloc.dart';
-import 'package:travelgo_user/features/view/screens/landing%20page/landing_page.dart';
-import 'package:travelgo_user/features/view/screens/splash%20screen/splash_screen.dart';
+import 'package:travelgo_user/features/view/screens/login_screen/login.dart';
 
 void main() {
   runApp(
@@ -18,6 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LandingPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }
