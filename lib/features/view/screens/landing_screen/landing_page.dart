@@ -1,8 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/landing_screen/widgets/landing_header.dart';
+import 'package:travelgo_user/features/view/screens/login_screen/login.dart';
 import 'package:travelgo_user/features/view/widgets/long_button.dart';
 
 class LandingPage extends StatelessWidget {
@@ -20,11 +23,20 @@ class LandingPage extends StatelessWidget {
               Lottie.asset('assets/landingpagegif.json'),
               Divider(),
               SizedBox(height: 5),
-              LongButton(
-                text: 'Get Started',
-                onPressed: () {
-                  log('Success');
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is LoginPageNavigationState) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
+                    );
+                  }
                 },
+                child: LongButton(
+                  text: 'Get Started',
+                  onPressed: () {
+                    context.read<AuthBloc>().add(GetStartedNavigationEvent());
+                  },
+                ),
               ),
             ],
           ),

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelgo_user/features/logic/login/login_bloc.dart';
-import 'package:travelgo_user/features/logic/splash/splash_bloc.dart';
-import 'package:travelgo_user/features/view/screens/login_screen/login.dart';
+import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/view/screens/splash_screen/splash_screen.dart';
 
 void main() {
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context)=>LoginBloc() )
-    ],
-    child: MyApp()
-    ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthBloc()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginScreen());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Splashscreen(),
+    );
   }
 }

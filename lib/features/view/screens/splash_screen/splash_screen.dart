@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelgo_user/features/logic/splash/splash_bloc.dart';
+import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/view/screens/landing_screen/landing_page.dart';
+import 'package:travelgo_user/features/view/screens/login_screen/login.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -10,19 +14,26 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
-  SplashBloc splashBloc = SplashBloc();
   @override
   void initState() {
     super.initState();
-    splashBloc.add(IntitalFetchEvent());
+    context.read<AuthBloc>().add(IntialSplashEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SplashBloc, SplashState>(
-      bloc: splashBloc,
+    return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // TODO: implement listener
+        log(state.runtimeType.toString());
+        if (state is FirstTimeLoading) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LandingPage()),
+          );
+        } else if (state is OnceLoadedState) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+          );
+        }
       },
       child: Scaffold(
         body: Center(child: Image(image: AssetImage('assets/logo3.png'))),
