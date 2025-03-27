@@ -23,6 +23,7 @@ class HeadingTextField extends StatelessWidget {
           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         TextFormField(
+          controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             enabledBorder: OutlineInputBorder(

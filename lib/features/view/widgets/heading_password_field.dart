@@ -11,7 +11,8 @@ class HeadingPasswordField extends StatefulWidget {
     super.key,
     required this.headline,
     required this.hint,
-    required this.controller, required this.onPressed,
+    required this.controller,
+    required this.onPressed,
   });
 
   @override
@@ -30,6 +31,7 @@ class _HeadingPasswordFieldState extends State<HeadingPasswordField> {
           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         TextFormField(
+          controller: widget.controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             enabledBorder: OutlineInputBorder(
