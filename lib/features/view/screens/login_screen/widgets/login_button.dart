@@ -5,14 +5,12 @@ import 'package:travelgo_user/core/constants/colors.dart';
 class LoginButton extends StatelessWidget {
   final String text;
   final void Function() onPressed;
-  final TextEditingController emailController;
-  final TextEditingController passController;
+
   const LoginButton({
     super.key,
     required this.text,
     required this.onPressed,
-    required this.emailController,
-    required this.passController,
+
   });
 
   @override

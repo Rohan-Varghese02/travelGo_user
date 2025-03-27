@@ -3,13 +3,34 @@ part of 'auth_bloc.dart';
 @immutable
 sealed class AuthState {}
 
+sealed class AuthActionState extends AuthState{}
+
 final class AuthInitial extends AuthState {}
 
-class FirstTimeLoading extends AuthState{
+class FirstTimeLoading extends AuthState {}
 
+class OnceLoadedState extends AuthState {}
+
+class LoginPageNavigationState extends AuthState {}
+
+class LoginSuccessState extends AuthState {
+  final UserCredential userCredential;
+
+  LoginSuccessState({required this.userCredential});
 }
-class OnceLoadedState extends AuthState{
 
+class LoginFailedState extends AuthState {
+  final String error;
+
+  LoginFailedState({required this.error});
 }
 
-class LoginPageNavigationState extends AuthState{}
+class LogoutState extends AuthState {}
+
+class NavigateToRegister extends AuthState {}
+
+class VisibleState extends AuthActionState {
+  final bool isVisible;
+
+  VisibleState({required this.isVisible});
+}

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 
 class HeadingPasswordField extends StatefulWidget {
+  final bool isVisible;
   final String headline;
   final String hint;
   final TextEditingController controller;
@@ -13,6 +14,7 @@ class HeadingPasswordField extends StatefulWidget {
     required this.hint,
     required this.controller,
     required this.onPressed,
+    required this.isVisible,
   });
 
   @override
@@ -20,7 +22,6 @@ class HeadingPasswordField extends StatefulWidget {
 }
 
 class _HeadingPasswordFieldState extends State<HeadingPasswordField> {
-  bool isVisible = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,7 +32,7 @@ class _HeadingPasswordFieldState extends State<HeadingPasswordField> {
           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         TextFormField(
-          obscureText: true,
+          obscureText: widget.isVisible,
           controller: widget.controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
@@ -41,14 +42,14 @@ class _HeadingPasswordFieldState extends State<HeadingPasswordField> {
             hintText: widget.hint,
             hintStyle: GoogleFonts.poppins(color: grey99, fontSize: 16),
             suffixIcon:
-                isVisible
+                widget.isVisible
                     ? IconButton(
-                      icon: Icon(Icons.visibility_off_outlined),
+                      icon: Icon(Icons.visibility_outlined),
                       color: grey99,
                       onPressed: widget.onPressed,
                     )
                     : IconButton(
-                      icon: Icon(Icons.visibility_outlined),
+                      icon: Icon(Icons.visibility_off_outlined),
                       color: grey99,
                       onPressed: widget.onPressed,
                     ),

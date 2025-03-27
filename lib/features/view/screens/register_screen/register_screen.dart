@@ -20,6 +20,7 @@ class RegisterScreen extends StatelessWidget {
     final TextEditingController passRegController = TextEditingController();
     final TextEditingController confirmpassRegController =
         TextEditingController();
+    bool isVisible = false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -28,9 +29,7 @@ class RegisterScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8),
             child: BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-              
-              },
+              listener: (context, state) {},
               child: Column(
                 children: [
                   Column(
@@ -44,27 +43,56 @@ class RegisterScreen extends StatelessWidget {
                         hint: 'Enter your email address',
                       ),
                       SizedBox(height: 20),
-                      HeadingPasswordField(
-                        headline: 'Password',
-                        hint: 'Enter your password',
-                        controller: passRegController,
-                        onPressed: () {},
+                      BlocBuilder<AuthBloc, AuthState>(
+                        buildWhen:
+                            (previous, current) => current is AuthActionState,
+                        builder: (context, state) {
+                          bool isVisible = true;
+                          if (state is VisibleState) {
+                            isVisible = state.isVisible;
+                          }
+                          return HeadingPasswordField(
+                            headline: 'Password',
+                            hint: 'Enter your password',
+                            controller: passRegController,
+                            onPressed: () {
+                              context.read<AuthBloc>().add(
+                                VisibillityButtonClicked(isVisible: isVisible),
+                              );
+                            },
+                            isVisible: isVisible,
+                          );
+                        },
                       ),
                       SizedBox(height: 20),
-                      HeadingPasswordField(
-                        headline: 'Confirm Password',
-                        hint: 'Confirm your password',
-                        controller: confirmpassRegController,
-                        onPressed: () {},
+
+                      BlocBuilder<AuthBloc, AuthState>(
+                        buildWhen:
+                            (previous, current) => current is AuthActionState,
+                        builder: (context, state) {
+                          bool isVisible = true;
+                          if (state is VisibleState) {
+                            isVisible = state.isVisible;
+                          }
+                          return HeadingPasswordField(
+                            headline: 'Confirm Password',
+                            hint: 'Confirm your password',
+                            controller: confirmpassRegController,
+                            onPressed: () {
+                              context.read<AuthBloc>().add(
+                                VisibillityButtonClicked(isVisible: isVisible),
+                              );
+                            },
+                            isVisible: isVisible,
+                          );
+                        },
                       ),
                       SizedBox(height: 20),
                       RegisterTpc(),
                       SizedBox(height: 20),
                       RegisterButton(
                         text: 'Register',
-                        onPressed: () {
-                          
-                        },
+                        onPressed: () {},
                         emailController: emailRegController,
                         passController: passRegController,
                         confirmPassController: confirmpassRegController,

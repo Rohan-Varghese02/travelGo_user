@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelgo_user/core/services/auth/auth_gate.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/landing_screen/landing_page.dart';
 import 'package:travelgo_user/features/view/screens/login_screen/login.dart';
@@ -31,7 +32,7 @@ class _SplashscreenState extends State<Splashscreen> {
           );
         } else if (state is OnceLoadedState) {
           Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+            MaterialPageRoute(builder: (context) => AuthGate()),
           );
         }
       },
