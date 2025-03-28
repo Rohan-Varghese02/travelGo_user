@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
 
   final TextEditingController passController = TextEditingController();
-
+  final key = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: BlocListener<AuthBloc, AuthState>(
             listenWhen: (previous, current) => current is! AuthActionState,
             listener: (context, state) {
+              log(state.runtimeType.toString());
               if (state is LoginSuccessState) {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -45,74 +46,92 @@ class _LoginScreenState extends State<LoginScreen> {
                   context,
                 ).showSnackBar(SnackBar(content: Text(state.error)));
               } else if (state is NavigateToRegister) {
-                Navigator.of(context)
-                    .push(
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    )
-                    .whenComplete(() {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Register successful'),
-                        ), // dont forget to change to then whencompleted gives u value even if u dont succed registering
-                      );
-                    });
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                );
               }
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    LoginHeader(),
-                    SizedBox(height: 20),
-                    HeadingTextField(
-                      headline: 'Email',
-                      controller: emailController,
-                      hint: 'Enter your email address',
-                    ),
-                    SizedBox(height: 20),
-                    BlocBuilder<AuthBloc, AuthState>(
-                      buildWhen:
-                          (previous, current) => current is AuthActionState,
-                      builder: (context, state) {
-                        bool isVisible = true;
-                        if (state is VisibleState) {
-                          isVisible = state.isVisible;
-                        }
-                        return HeadingPasswordField(
-                          headline: 'Password',
-                          hint: 'Enter your password',
-                          controller: passController,
-                          onPressed: () {
+                Form(
+                  key: key,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LoginHeader(),
+                      SizedBox(height: 10),
+                      HeadingTextField(
+                        headline: 'Email',
+                        controller: emailController,
+                        hint: 'Enter your email address',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your email";
+                          } else if (!RegExp(
+                            r'^[^@]+@[^@]+\.[^@]+',
+                          ).hasMatch(value)) {
+                            return "Enter a valid email";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      BlocBuilder<AuthBloc, AuthState>(
+                        buildWhen:
+                            (previous, current) => current is AuthActionState,
+                        builder: (context, state) {
+                          bool isVisible = true;
+                          if (state is VisibleState) {
+                            isVisible = state.isVisible;
+                          }
+                          return HeadingPasswordField(
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Enter password';
+                              }
+                              return null;
+                            },
+                            headline: 'Password',
+                            hint: 'Enter your password',
+                            controller: passController,
+                            onPressed: () {
+                              context.read<AuthBloc>().add(
+                                VisibillityButtonClicked(isVisible: isVisible),
+                              );
+                              log('password visible');
+                            },
+                            isVisible: isVisible,
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      LoginButton(
+                        text: 'Login',
+                        onPressed: () {
+                          if (key.currentState!.validate()) {
+                            // Form is valid, proceed with login
+                            log('pressed');
                             context.read<AuthBloc>().add(
-                              VisibillityButtonClicked(isVisible: isVisible),
+                              CheckLoginEvent(
+                                email: emailController.text,
+                                password: passController.text,
+                              ),
                             );
-                            log('password visible');
-                          },
-                          isVisible: isVisible,
-                        );
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    LoginButton(
-                      text: 'Login',
-                      onPressed: () {
-                        log('pressed');
-                        context.read<AuthBloc>().add(
-                          CheckLoginEvent(
-                            email: emailController.text,
-                            password: passController.text,
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: 20),
-                    DividerWithOr(),
-                    SizedBox(height: 20),
+                          }
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      DividerWithOr(),
+                      SizedBox(height: 10),
 
-                    GoogleButton(onTap: () {}),
-                  ],
+                      GoogleButton(
+                        onTap: () {
+                          context.read<AuthBloc>().add(GoogleSignInEvent());
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 LoginFooter(
                   onTap: () {

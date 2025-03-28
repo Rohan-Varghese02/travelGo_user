@@ -18,6 +18,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckLoginEvent>(checkLoginEvent);
     on<LogOutButtonClicked>(logOutButtonClicked);
     on<JoinButtonClicked>(joinButtonClicked);
+
+    on<GoogleSignInEvent>(googleSignIn);
   }
 
   FutureOr<void> intialSplashEvent(
@@ -79,5 +81,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) {
     emit(NavigateToRegister());
+  }
+
+  FutureOr<void> googleSignIn(
+    GoogleSignInEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      final auth = Authservice();
+      final UserCredential userCredential = await auth.signInWithGoogle();
+
+      if (userCredential.user != null) {
+        emit(
+          GoogleLoginSucess(userCredential: userCredential),
+        ); // Emit success with user info
+      } else {
+        emit(GoogleLoginFailure(error: "Google Sign-In failed")); 
+      }
+    } catch (e) {
+      emit(GoogleLoginFailure(error: e.toString())); 
+    }
   }
 }

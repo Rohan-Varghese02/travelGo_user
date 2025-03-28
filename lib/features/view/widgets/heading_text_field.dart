@@ -6,11 +6,13 @@ class HeadingTextField extends StatelessWidget {
   final String hint;
   final String headline;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
   const HeadingTextField({
     super.key,
     required this.headline,
     required this.controller,
     required this.hint,
+    this.validator,
   });
 
   @override
@@ -23,11 +25,15 @@ class HeadingTextField extends StatelessWidget {
           style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         TextFormField(
+          validator: validator,
           controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: grey20),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: black),
             ),
             hintText: hint,
             hintStyle: GoogleFonts.poppins(color: grey99, fontSize: 16),

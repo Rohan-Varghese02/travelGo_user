@@ -23,3 +23,7 @@ class VisibillityButtonClicked extends AuthEvent {
 
   VisibillityButtonClicked({required this.isVisible});
 }
+
+class GoogleSignInEvent extends AuthEvent{
+
+}

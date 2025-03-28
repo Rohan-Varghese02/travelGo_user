@@ -3,7 +3,7 @@ part of 'auth_bloc.dart';
 @immutable
 sealed class AuthState {}
 
-sealed class AuthActionState extends AuthState{}
+sealed class AuthActionState extends AuthState {}
 
 final class AuthInitial extends AuthState {}
 
@@ -33,4 +33,16 @@ class VisibleState extends AuthActionState {
   final bool isVisible;
 
   VisibleState({required this.isVisible});
+}
+
+class GoogleLoginSucess extends AuthState {
+  final UserCredential userCredential;
+
+  GoogleLoginSucess({required this.userCredential});
+}
+
+class GoogleLoginFailure extends AuthState {
+  final String error;
+
+  GoogleLoginFailure({required this.error});
 }
