@@ -7,10 +7,12 @@ sealed class AuthActionState extends AuthState {}
 
 final class AuthInitial extends AuthState {}
 
+// Landing Page
 class FirstTimeLoading extends AuthState {}
 
 class OnceLoadedState extends AuthState {}
 
+// Login Page
 class LoginPageNavigationState extends AuthState {}
 
 class LoginSuccessState extends AuthState {
@@ -35,6 +37,7 @@ class VisibleState extends AuthActionState {
   VisibleState({required this.isVisible});
 }
 
+// Google Services
 class GoogleLoginSucess extends AuthState {
   final UserCredential userCredential;
 
@@ -45,4 +48,17 @@ class GoogleLoginFailure extends AuthState {
   final String error;
 
   GoogleLoginFailure({required this.error});
+}
+
+//Register Screen
+
+class ReturnToLogin extends AuthState {}
+
+class PasswordConfirmedPassDifferent extends AuthState {}
+
+class ContinueRegisteration extends AuthState {
+  final String email;
+  final String password;
+
+  ContinueRegisteration({required this.email, required this.password});
 }

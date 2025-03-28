@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/view/screens/register_screen/register_profile_screen.dart';
 import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_button.dart';
+import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_footer.dart';
 import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_header.dart';
 import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_tpc.dart';
-import 'package:travelgo_user/features/view/widgets/divider_with_or.dart';
-import 'package:travelgo_user/features/view/widgets/google_button.dart';
-import 'package:travelgo_user/features/view/widgets/heading_password_field.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/divider_with_or.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/google_button.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/heading_password_field.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text_field.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -20,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
     final TextEditingController passRegController = TextEditingController();
     final TextEditingController confirmpassRegController =
         TextEditingController();
-    bool isVisible = false;
+    final key = GlobalKey<FormState>();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -29,81 +31,142 @@ class RegisterScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8),
             child: BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {},
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RegisterHeader(),
-                      SizedBox(height: 20),
-                      HeadingTextField(
-                        headline: 'Email',
-                        controller: emailRegController,
-                        hint: 'Enter your email address',
+              listener: (context, state) {
+                log(state.runtimeType.toString());
+                if (state is ReturnToLogin) {
+                  Navigator.of(context).pop();
+                } else if (state is PasswordConfirmedPassDifferent) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Password and Confirm Password doesn\'t match',
                       ),
-                      SizedBox(height: 20),
-                      BlocBuilder<AuthBloc, AuthState>(
-                        buildWhen:
-                            (previous, current) => current is AuthActionState,
-                        builder: (context, state) {
-                          bool isVisible = true;
-                          if (state is VisibleState) {
-                            isVisible = state.isVisible;
-                          }
-                          return HeadingPasswordField(
-                            headline: 'Password',
-                            hint: 'Enter your password',
-                            controller: passRegController,
-                            onPressed: () {
-                              context.read<AuthBloc>().add(
-                                VisibillityButtonClicked(isVisible: isVisible),
-                              );
-                            },
-                            isVisible: isVisible,
-                          );
-                        },
-                      ),
-                      SizedBox(height: 20),
+                    ),
+                  );
+                } else if (state is ContinueRegisteration) {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder:
+                          (context) => RegisterProfileScreen(
+                            email: state.email,
+                            password: state.password,
+                          ),
+                    ),
+                  );
+                }
+              },
+              child: Form(
+                key: key,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RegisterHeader(),
+                    SizedBox(height: 20),
+                    HeadingTextField(
+                      headline: 'Email',
+                      controller: emailRegController,
+                      hint: 'Enter your email address',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Please enter your email";
+                        } else if (!RegExp(
+                          r'^[^@]+@[^@]+\.[^@]+',
+                        ).hasMatch(value)) {
+                          return "Enter a valid email";
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    BlocBuilder<AuthBloc, AuthState>(
+                      buildWhen:
+                          (previous, current) => current is AuthActionState,
+                      builder: (context, state) {
+                        bool isVisible = true;
+                        if (state is VisibleState) {
+                          isVisible = state.isVisible;
+                        }
+                        return HeadingPasswordField(
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter password';
+                            }
+                            return null;
+                          },
+                          headline: 'Password',
+                          hint: 'Enter your password',
+                          controller: passRegController,
+                          onPressed: () {
+                            context.read<AuthBloc>().add(
+                              VisibillityButtonClicked(isVisible: isVisible),
+                            );
+                          },
+                          isVisible: isVisible,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 20),
 
-                      BlocBuilder<AuthBloc, AuthState>(
-                        buildWhen:
-                            (previous, current) => current is AuthActionState,
-                        builder: (context, state) {
-                          bool isVisible = true;
-                          if (state is VisibleState) {
-                            isVisible = state.isVisible;
-                          }
-                          return HeadingPasswordField(
-                            headline: 'Confirm Password',
-                            hint: 'Confirm your password',
-                            controller: confirmpassRegController,
-                            onPressed: () {
-                              context.read<AuthBloc>().add(
-                                VisibillityButtonClicked(isVisible: isVisible),
-                              );
-                            },
-                            isVisible: isVisible,
+                    BlocBuilder<AuthBloc, AuthState>(
+                      buildWhen:
+                          (previous, current) => current is AuthActionState,
+                      builder: (context, state) {
+                        bool isVisible = true;
+                        if (state is VisibleState) {
+                          isVisible = state.isVisible;
+                        }
+                        return HeadingPasswordField(
+                          validator: (p0) {
+                            if (p0 == null || p0.isEmpty) {
+                              return 'Enter Confirm Password';
+                            }
+                            return null;
+                          },
+                          headline: 'Confirm Password',
+                          hint: 'Confirm your password',
+                          controller: confirmpassRegController,
+                          onPressed: () {
+                            context.read<AuthBloc>().add(
+                              VisibillityButtonClicked(isVisible: isVisible),
+                            );
+                          },
+                          isVisible: isVisible,
+                        );
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    RegisterTpc(),
+                    SizedBox(height: 20),
+                    RegisterButton(
+                      text: 'Register',
+                      onPressed: () {
+                        if (key.currentState!.validate()) {
+                          log('pressed');
+                          context.read<AuthBloc>().add(
+                            RegisterButtonEvent(
+                              email: emailRegController.text,
+                              password: passRegController.text,
+                              confirmPassword: confirmpassRegController.text,
+                            ),
                           );
-                        },
-                      ),
-                      SizedBox(height: 20),
-                      RegisterTpc(),
-                      SizedBox(height: 20),
-                      RegisterButton(
-                        text: 'Register',
-                        onPressed: () {},
-                        emailController: emailRegController,
-                        passController: passRegController,
-                        confirmPassController: confirmpassRegController,
-                      ),
-                      SizedBox(height: 20),
-                      DividerWithOr(),
-                      SizedBox(height: 20),
-                      GoogleButton(onTap: () {}),
-                    ],
-                  ),
-                ],
+                        }
+                      },
+                      emailController: emailRegController,
+                      passController: passRegController,
+                      confirmPassController: confirmpassRegController,
+                    ),
+                    SizedBox(height: 20),
+                    DividerWithOr(),
+                    SizedBox(height: 20),
+                    GoogleButton(onTap: () {}),
+                    SizedBox(height: 80),
+                    RegisterFooter(
+                      onTap: () {
+                        context.read<AuthBloc>().add(AlreadyMemeber());
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

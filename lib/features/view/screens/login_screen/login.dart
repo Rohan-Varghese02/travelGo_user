@@ -8,9 +8,9 @@ import 'package:travelgo_user/features/view/screens/login_screen/widgets/login_b
 import 'package:travelgo_user/features/view/screens/login_screen/widgets/login_footer.dart';
 import 'package:travelgo_user/features/view/screens/login_screen/widgets/login_header.dart';
 import 'package:travelgo_user/features/view/screens/register_screen/register_screen.dart';
-import 'package:travelgo_user/features/view/widgets/divider_with_or.dart';
-import 'package:travelgo_user/features/view/widgets/google_button.dart';
-import 'package:travelgo_user/features/view/widgets/heading_password_field.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/divider_with_or.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/google_button.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/heading_password_field.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text_field.dart';
 
 class LoginScreen extends StatefulWidget {

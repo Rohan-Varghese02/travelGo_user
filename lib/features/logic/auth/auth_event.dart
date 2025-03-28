@@ -7,6 +7,7 @@ class IntialSplashEvent extends AuthEvent {}
 
 class GetStartedNavigationEvent extends AuthEvent {}
 
+// Login Screen
 class CheckLoginEvent extends AuthEvent {
   final String email;
   final String password;
@@ -24,6 +25,16 @@ class VisibillityButtonClicked extends AuthEvent {
   VisibillityButtonClicked({required this.isVisible});
 }
 
-class GoogleSignInEvent extends AuthEvent{
+//Google Sigin
+class GoogleSignInEvent extends AuthEvent {}
 
+/// Register Screen
+class AlreadyMemeber extends AuthEvent {}
+
+class RegisterButtonEvent extends AuthEvent {
+  final String email;
+  final String password;
+  final String confirmPassword;
+
+  RegisterButtonEvent({required this.email, required this.password, required this.confirmPassword});
 }

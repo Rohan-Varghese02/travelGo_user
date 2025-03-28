@@ -18,8 +18,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckLoginEvent>(checkLoginEvent);
     on<LogOutButtonClicked>(logOutButtonClicked);
     on<JoinButtonClicked>(joinButtonClicked);
-
+    on<AlreadyMemeber>(alreadyMemeber);
     on<GoogleSignInEvent>(googleSignIn);
+
+    on<RegisterButtonEvent>(registerButtonEvent);
   }
 
   FutureOr<void> intialSplashEvent(
@@ -96,10 +98,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           GoogleLoginSucess(userCredential: userCredential),
         ); // Emit success with user info
       } else {
-        emit(GoogleLoginFailure(error: "Google Sign-In failed")); 
+        emit(GoogleLoginFailure(error: "Google Sign-In failed"));
       }
     } catch (e) {
-      emit(GoogleLoginFailure(error: e.toString())); 
+      emit(GoogleLoginFailure(error: e.toString()));
+    }
+  }
+
+  /// Register Screen Events
+
+  FutureOr<void> alreadyMemeber(AlreadyMemeber event, Emitter<AuthState> emit) {
+    emit(ReturnToLogin());
+  }
+
+  FutureOr<void> registerButtonEvent(
+    RegisterButtonEvent event,
+    Emitter<AuthState> emit,
+  ) {
+    if (event.password != event.confirmPassword) {
+      emit(PasswordConfirmedPassDifferent());
+    } else {
+      emit(ContinueRegisteration(email:event.email , password:event.password ));
     }
   }
 }
