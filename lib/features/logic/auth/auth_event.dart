@@ -36,5 +36,26 @@ class RegisterButtonEvent extends AuthEvent {
   final String password;
   final String confirmPassword;
 
-  RegisterButtonEvent({required this.email, required this.password, required this.confirmPassword});
+  RegisterButtonEvent({
+    required this.email,
+    required this.password,
+    required this.confirmPassword,
+  });
+}
+
+/// Register  Profile image
+
+class PickImageEvent extends AuthEvent {}
+
+class UploadImageEvent extends AuthEvent {
+  final String imagePath;
+
+  UploadImageEvent({required this.imagePath});
+
+}
+
+class SaveImageUrl extends AuthEvent{
+  final String imageUrl;
+
+  SaveImageUrl({required this.imageUrl});
 }

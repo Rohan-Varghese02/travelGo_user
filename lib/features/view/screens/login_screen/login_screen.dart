@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LoginHeader(),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       HeadingTextField(
                         headline: 'Email',
                         controller: emailController,
@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       BlocBuilder<AuthBloc, AuthState>(
                         buildWhen:
                             (previous, current) => current is AuthActionState,
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           );
                         },
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       LoginButton(
                         text: 'Login',
                         onPressed: () {
@@ -121,9 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         },
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       DividerWithOr(),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
 
                       GoogleButton(
                         onTap: () {

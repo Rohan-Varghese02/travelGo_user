@@ -62,3 +62,23 @@ class ContinueRegisteration extends AuthState {
 
   ContinueRegisteration({required this.email, required this.password});
 }
+
+/// Register screen
+///
+///
+class ProfileImagePicked extends AuthState {
+  final String imagePath;
+  ProfileImagePicked(this.imagePath);
+}
+
+class ProfileImageUploading extends AuthState {}
+
+class ProfileImageUploaded extends AuthState {
+  final String imageUrl;
+  ProfileImageUploaded(this.imageUrl);
+}
+
+class ProfileError extends AuthState {
+  final String message;
+  ProfileError(this.message);
+}
