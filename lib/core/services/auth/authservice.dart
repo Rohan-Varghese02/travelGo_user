@@ -18,21 +18,6 @@ class Authservice {
     try {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      UserModel userModel = UserModel(
-        uid: userCredential.user!.uid,
-        email: email,
-      );
-
-      firestore
-          .collection('Users')
-          .doc(userCredential.user!.uid)
-          .set(userModel.toMap());
-
-      firestore.collection('Users').doc(userCredential.user!.uid).set({
-        'uid': userCredential.user!.uid,
-        'email': email,
-        'role': 'user',
-      });
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
@@ -58,9 +43,15 @@ class Authservice {
       credential,
     );
     log(userCredential.user!.displayName.toString());
-    UserModel userModel = UserModel(
+    UserDataModel userModel = UserDataModel(
       uid: userCredential.user!.uid,
       email: userCredential.user!.email!,
+      name: userCredential.user!.displayName ?? 'User',
+      password: 'GoogleID',
+      phoneNumber: userCredential.user!.phoneNumber ?? '0000000000',
+      imageUrl:
+          userCredential.user!.photoURL ??
+          'https://static.vecteezy.com/system/resources/thumbnails/013/360/247/small/default-avatar-photo-icon-social-media-profile-sign-symbol-vector.jpg',
     );
     await firestore
         .collection("Users")
@@ -72,5 +63,35 @@ class Authservice {
     //   'role': 'user',
     // });
     return userCredential;
+  }
+
+  Future<UserCredential> signUpWithEmailAndPassword(
+    String name,
+    email,
+    password,
+    role,
+    phoneNumber,
+    imageUrl,
+  ) async {
+    try {
+      UserCredential userCredential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      UserDataModel userDataModel = UserDataModel(
+        name: name,
+        uid: userCredential.user!.uid,
+        email: email,
+        password: password,
+        phoneNumber: phoneNumber,
+        imageUrl: imageUrl,
+      );
+      firestore
+          .collection("Users")
+          .doc(userCredential.user!.uid)
+          .set(userDataModel.toMap());
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.code);
+    }
   }
 }

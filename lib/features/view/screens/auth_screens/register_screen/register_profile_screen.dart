@@ -4,7 +4,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/core/services/auth/auth_gate.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/view/screens/home_screen/home_screen.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/login_screen.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_dailog.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text_field.dart';
 import 'package:travelgo_user/features/view/widgets/long_button.dart';
 import 'package:travelgo_user/features/view/widgets/profile_avatar.dart';
@@ -48,6 +53,41 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                   } else if (state is ProfileImageUploaded) {
                     imageUrl = state.imageUrl;
                     log(state.imageUrl);
+                    context.read<AuthBloc>().add(
+                      RegisterUser(
+                        name: nameController.text,
+                        email: emailController.text,
+                        password: widget.password,
+                        phoneNumber: phoneController.text,
+                        imageUrl: imageUrl.toString(),
+                      ),
+                    );
+                  } else if (state is RegisterSuccessful) {
+                    log('Register success');
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    });
+                  } else if (state is RegisterationError) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return RegisterDailog(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                            },
+                          );
+                        },
+                      );
+                    });
+                  } else if (state is NoImageState) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Upload Photo to proceed')),
+                      );
+                    });
                   }
                   return Column(
                     children: [
@@ -111,7 +151,8 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                             context.read<AuthBloc>().add(
                               UploadImageEvent(imagePath: imagePath),
                             );
-                          
+                          } else {
+                            context.read<AuthBloc>().add(NoImageEvent());
                           }
 
                           log(nameController.text);

@@ -33,6 +33,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     ///
     on<PickImageEvent>(pickImageEvent);
     on<UploadImageEvent>(uploadImageEvent);
+    on<RegisterUser>(registerUser);
+
+    on<NoImageEvent>(noImageEvent);
   }
 
   FutureOr<void> intialSplashEvent(
@@ -105,9 +108,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final UserCredential userCredential = await auth.signInWithGoogle();
 
       if (userCredential.user != null) {
-        emit(
-          GoogleLoginSucess(userCredential: userCredential),
-        ); 
+        emit(GoogleLoginSucess(userCredential: userCredential));
       } else {
         emit(GoogleLoginFailure(error: "Google Sign-In failed"));
       }
@@ -158,32 +159,33 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(ProfileImageUploading());
-    // try {
-    //   const cloudinaryUrl =
-    //       "https://api.cloudinary.com/v1_1/dvmrt0wfv/image/upload";
-    //   const uploadPreset = "TravLGo_users";
-
-    //   var request = http.MultipartRequest('POST', Uri.parse(cloudinaryUrl));
-    //   request.fields['upload_preset'] = uploadPreset;
-    //   request.files.add(
-    //     await http.MultipartFile.fromPath('file', event.imagePath),
-    //   );
-
-    //   var response = await request.send();
-    //   if (response.statusCode == 200) {
-    //     var responseData = json.decode(await response.stream.bytesToString());
-    //     String imageUrl = responseData['secure_url'];
-    //     emit(ProfileImageUploaded(imageUrl));
-    //   } else {
-    //     print(response.statusCode);
-    //     emit(ProfileError("Failed to upload image"));
-    //   }
-    // } catch (e) {
-    //   emit(ProfileError("Error uploading image: $e"));
-    // }
-
     final apiservices = ApiServices();
     String imageUrl = await apiservices.getUploadUrl(event.imagePath);
     emit(ProfileImageUploaded(imageUrl));
+  }
+
+  FutureOr<void> registerUser(
+    RegisterUser event,
+    Emitter<AuthState> emit,
+  ) async {
+    final authservices = Authservice();
+    try {
+      await authservices.signUpWithEmailAndPassword(
+        event.name,
+        event.email,
+        event.password,
+        'user',
+        event.phoneNumber,
+        event.imageUrl,
+      );
+      emit(RegisterSuccessful());
+    } catch (e) {
+      log(e.toString());
+      emit(RegisterationError());
+    }
+  }
+
+  FutureOr<void> noImageEvent(NoImageEvent event, Emitter<AuthState> emit) {
+    emit(NoImageState());
   }
 }

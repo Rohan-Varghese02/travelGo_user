@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
-import 'package:travelgo_user/features/view/screens/register_screen/register_profile_screen.dart';
-import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_button.dart';
-import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_footer.dart';
-import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_header.dart';
-import 'package:travelgo_user/features/view/screens/register_screen/widgets/register_tpc.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/register_profile_screen.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_button.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_footer.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_header.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_info.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_tpc.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_validator.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/divider_with_or.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/google_button.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/heading_password_field.dart';
@@ -67,14 +69,7 @@ class RegisterScreen extends StatelessWidget {
                       controller: emailRegController,
                       hint: 'Enter your email address',
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please enter your email";
-                        } else if (!RegExp(
-                          r'^[^@]+@[^@]+\.[^@]+',
-                        ).hasMatch(value)) {
-                          return "Enter a valid email";
-                        }
-                        return null;
+                        return validateEmail(value);
                       },
                     ),
                     SizedBox(height: 20),
@@ -88,10 +83,7 @@ class RegisterScreen extends StatelessWidget {
                         }
                         return HeadingPasswordField(
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter password';
-                            }
-                            return null;
+                            return validatePassword(value);
                           },
                           headline: 'Password',
                           hint: 'Enter your password',
@@ -105,6 +97,7 @@ class RegisterScreen extends StatelessWidget {
                         );
                       },
                     ),
+                    RegisterInfo(),
                     SizedBox(height: 20),
 
                     BlocBuilder<AuthBloc, AuthState>(
@@ -138,7 +131,7 @@ class RegisterScreen extends StatelessWidget {
                     RegisterTpc(),
                     SizedBox(height: 20),
                     RegisterButton(
-                      text: 'Register',
+                      text: 'Continue',
                       onPressed: () {
                         if (key.currentState!.validate()) {
                           log('pressed');
@@ -158,7 +151,12 @@ class RegisterScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     DividerWithOr(),
                     SizedBox(height: 20),
-                    GoogleButton(onTap: () {}),
+                    GoogleButton(
+                      onTap: () {
+                        Navigator.pop(context);
+                        context.read<AuthBloc>().add(GoogleSignInEvent());
+                      },
+                    ),
                     SizedBox(height: 80),
                     RegisterFooter(
                       onTap: () {

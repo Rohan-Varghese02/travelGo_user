@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
-import 'package:travelgo_user/features/view/screens/landing_screen/widgets/landing_header.dart';
-import 'package:travelgo_user/features/view/screens/login_screen/login_screen.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/landing_screen/widgets/landing_header.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/login_screen.dart';
 import 'package:travelgo_user/features/view/widgets/long_button.dart';
 
 class LandingPage extends StatelessWidget {

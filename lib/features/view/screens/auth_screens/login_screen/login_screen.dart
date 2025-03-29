@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/home_screen/home_screen.dart';
-import 'package:travelgo_user/features/view/screens/login_screen/widgets/login_button.dart';
-import 'package:travelgo_user/features/view/screens/login_screen/widgets/login_footer.dart';
-import 'package:travelgo_user/features/view/screens/login_screen/widgets/login_header.dart';
-import 'package:travelgo_user/features/view/screens/register_screen/register_screen.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/login_button.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/login_footer.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/login_header.dart';
+import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/register_screen.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/divider_with_or.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/google_button.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/heading_password_field.dart';
@@ -42,9 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 );
               } else if (state is LoginFailedState) {
                 log(state.error);
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(state.error)));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Email and Password are incorrect')),
+                );
               } else if (state is NavigateToRegister) {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => RegisterScreen()),

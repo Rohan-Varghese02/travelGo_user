@@ -82,3 +82,9 @@ class ProfileError extends AuthState {
   final String message;
   ProfileError(this.message);
 }
+
+class RegisterationError extends AuthState{}
+
+class RegisterSuccessful extends AuthState{}
+
+class NoImageState extends AuthState{}

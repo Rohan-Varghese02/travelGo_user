@@ -51,11 +51,30 @@ class UploadImageEvent extends AuthEvent {
   final String imagePath;
 
   UploadImageEvent({required this.imagePath});
-
 }
 
-class SaveImageUrl extends AuthEvent{
+class SaveImageUrl extends AuthEvent {
   final String imageUrl;
 
   SaveImageUrl({required this.imageUrl});
+}
+
+class NoImageEvent extends AuthEvent{
+  
+}
+
+class RegisterUser extends AuthEvent {
+  final String name;
+  final String email;
+  final String password;
+  final String phoneNumber;
+  final String imageUrl;
+
+  RegisterUser({
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.phoneNumber,
+    required this.imageUrl,
+  });
 }
