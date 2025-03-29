@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/core/services/auth/auth_gate.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/landing_screen/landing_page.dart';
-import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/login_screen.dart';
+
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});

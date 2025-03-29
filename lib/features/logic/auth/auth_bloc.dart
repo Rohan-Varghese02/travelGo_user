@@ -1,17 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgo_user/core/services/api_services.dart';
 import 'package:travelgo_user/core/services/auth/authservice.dart';
 import 'package:travelgo_user/core/services/local_storage.dart';
-
 part 'auth_event.dart';
 part 'auth_state.dart';
 
