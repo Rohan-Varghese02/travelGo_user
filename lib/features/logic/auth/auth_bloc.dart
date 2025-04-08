@@ -33,6 +33,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<RegisterUser>(registerUser);
 
     on<NoImageEvent>(noImageEvent);
+
+    on<LogoutEvent>(logoutEvent);
   }
 
   FutureOr<void> intialSplashEvent(
@@ -208,5 +210,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(ResetPasswordFailure());
       log(error.toString());
     }
+  }
+
+  FutureOr<void> logoutEvent(LogoutEvent event, Emitter<AuthState> emit) {
+    emit(LogoutApprove());
   }
 }

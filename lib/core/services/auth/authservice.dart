@@ -104,4 +104,16 @@ class Authservice {
       throw Exception('Something went wrong');
     }
   }
+
+  Future<UserDataModel> getCurrentUserData() async {
+    final user = firebaseAuth.currentUser;
+    if (user == null) throw Exception("No user is logged in");
+
+    final doc = await firestore.collection('Users').doc(user.uid).get();
+
+    if (!doc.exists) throw Exception("User data not found");
+
+    UserDataModel userdata = UserDataModel.fromMap(doc.data()!);
+    return userdata;
+  }
 }

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:travelgo_user/features/view/screens/home_screen/home_screen.dart';
+import 'package:travelgo_user/data/models/user_data.dart';
+import 'package:travelgo_user/features/view/screens/main_screen/main_screen.dart';
+import 'package:travelgo_user/features/view/screens/pages/home_page/home_page.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/login_screen.dart';
 
 class AuthGate extends StatefulWidget {
@@ -20,9 +22,12 @@ class _AuthGateState extends State<AuthGate> {
             .get();
 
     if (docSnapshot.exists) {
+      final data = docSnapshot.data()!;
       final role = docSnapshot.data()!['role'];
       if (role == 'user') {
-        return HomeScreen();
+        final userData = UserDataModel.fromMap(data);
+
+        return MainScreen(userdata: userData);
       } else {
         return LoginScreen();
       }

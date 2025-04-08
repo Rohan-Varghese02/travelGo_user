@@ -83,4 +83,8 @@ class RegisterUser extends AuthEvent {
     required this.phoneNumber,
     required this.imageUrl,
   });
+
+  //Logout from homescreen
 }
+
+class LogoutEvent extends AuthEvent {}

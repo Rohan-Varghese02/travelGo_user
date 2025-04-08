@@ -1,5 +1,3 @@
-
-
 class UserDataModel {
   final String name;
   final String uid;
@@ -28,5 +26,17 @@ class UserDataModel {
       "phoneNumber": phoneNumber,
       "imageUrl": imageUrl,
     };
+  }
+
+  factory UserDataModel.fromMap(Map<String, dynamic> map) {
+    return UserDataModel(
+      name: map['name'] ?? '',
+      role: map['role'] ?? '',
+      uid: map['uid'] ?? '',
+      email: map['email'] ?? '',
+      password: map['password'] ?? '',
+      phoneNumber: map['phoneNumber'] ?? '',
+      imageUrl: map['imageUrl'] ?? '',
+    );
   }
 }

@@ -94,3 +94,5 @@ class RegisterationError extends AuthState{}
 class RegisterSuccessful extends AuthState{}
 
 class NoImageState extends AuthState{}
+
+class LogoutApprove extends AuthState{}

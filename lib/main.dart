@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/logic/nav/nav_bloc.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/splash_screen/splash_screen.dart';
 import 'package:travelgo_user/core/services/firebase_options.dart';
 
@@ -10,7 +11,10 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => AuthBloc())],
+      providers: [
+        BlocProvider(create: (context) => NavBloc()),
+        BlocProvider(create: (context) => AuthBloc()),
+      ],
       child: MyApp(),
     ),
   );

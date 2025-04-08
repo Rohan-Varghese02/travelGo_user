@@ -7,7 +7,6 @@ import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/forgot_pass.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/forgot_pass_dailog.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/validator_function.dart';
-import 'package:travelgo_user/features/view/screens/home_screen/home_screen.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/login_button.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/login_footer.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/widgets/login_header.dart';
