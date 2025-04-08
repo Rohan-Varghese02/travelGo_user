@@ -25,6 +25,14 @@ class VisibillityButtonClicked extends AuthEvent {
   VisibillityButtonClicked({required this.isVisible});
 }
 
+class ForgotPasswordEvent extends AuthEvent {}
+
+class ResetPasswordEvent extends AuthEvent {
+  final String email;
+
+  ResetPasswordEvent({required this.email});
+}
+
 //Google Sigin
 class GoogleSignInEvent extends AuthEvent {}
 
@@ -59,9 +67,7 @@ class SaveImageUrl extends AuthEvent {
   SaveImageUrl({required this.imageUrl});
 }
 
-class NoImageEvent extends AuthEvent{
-  
-}
+class NoImageEvent extends AuthEvent {}
 
 class RegisterUser extends AuthEvent {
   final String name;

@@ -21,6 +21,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<JoinButtonClicked>(joinButtonClicked);
     on<AlreadyMemeber>(alreadyMemeber);
     on<GoogleSignInEvent>(googleSignIn);
+    on<ForgotPasswordEvent>(forgotPasswordEvent);
+    on<ResetPasswordEvent>(resetPasswordEvent);
 
     on<RegisterButtonEvent>(registerButtonEvent);
     //////////////////////
@@ -129,7 +131,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  ////////////////////
+  //Register Screen Events
 
   FutureOr<void> pickImageEvent(
     PickImageEvent event,
@@ -182,5 +184,29 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   FutureOr<void> noImageEvent(NoImageEvent event, Emitter<AuthState> emit) {
     emit(NoImageState());
+  }
+
+  FutureOr<void> forgotPasswordEvent(
+    ForgotPasswordEvent event,
+    Emitter<AuthState> emit,
+  ) {
+    log('Forgot password');
+    emit(ForgotPasswordState());
+  }
+
+  FutureOr<void> resetPasswordEvent(
+    ResetPasswordEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    try {
+      await Authservice().resetPasswordEmail(event.email);
+      emit(ResetPasswordSuccess());
+    } on FirebaseAuthException catch (e) {
+      emit(ResetPasswordFailure());
+      log(e.toString());
+    } catch (error) {
+      emit(ResetPasswordFailure());
+      log(error.toString());
+    }
   }
 }

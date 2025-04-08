@@ -9,7 +9,7 @@ import 'package:travelgo_user/features/view/screens/auth_screens/register_screen
 import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_header.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_info.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_tpc.dart';
-import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_validator.dart';
+import 'package:travelgo_user/features/view/widgets/auth%20widgets/validator_function.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/divider_with_or.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/google_button.dart';
 import 'package:travelgo_user/features/view/widgets/auth%20widgets/heading_password_field.dart';
