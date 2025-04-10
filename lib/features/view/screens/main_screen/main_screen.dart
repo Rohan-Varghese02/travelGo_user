@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:travelgo_user/core/services/auth/authservice.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/nav/nav_bloc.dart';
 import 'package:travelgo_user/features/view/screens/main_screen/widgets/bottom_nav_bar.dart';
@@ -13,7 +10,7 @@ import 'package:travelgo_user/features/view/screens/pages/journal_page/journal_p
 import 'package:travelgo_user/features/view/screens/pages/profile_page/profile_page.dart';
 
 class MainScreen extends StatelessWidget {
-  MainScreen({super.key, required this.userdata});
+  const MainScreen({super.key, required this.userdata});
   final UserDataModel userdata;
 
   @override
@@ -23,7 +20,7 @@ class MainScreen extends StatelessWidget {
       BlogPage(),
       JournalPage(),
       ChatPage(),
-      ProfilePage(userdata: userdata),
+      ProfilePage(),
     ];
     return BlocBuilder<NavBloc, NavState>(
       builder: (context, state) {

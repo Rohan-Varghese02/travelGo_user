@@ -42,14 +42,18 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                 builder: (context, state) {
                   String? imagePath;
                   String? imageUrl;
+                  String? imagePublicId;
 
                   if (state is ProfileImagePicked) {
                     imagePath = state.imagePath;
                   } else if (state is ProfileImageUploaded) {
+                    imagePublicId = state.imagePublicID;
                     imageUrl = state.imageUrl;
+                    log(state.imagePublicID);
                     log(state.imageUrl);
                     context.read<AuthBloc>().add(
                       RegisterUser(
+                        imagePublicID: imagePublicId,
                         name: nameController.text,
                         email: emailController.text,
                         password: widget.password,
@@ -105,12 +109,9 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                           radius: 100,
                           backgroundImage:
                               imagePath != null
-                                  ? FileImage(
-                                    File(imagePath),
-                                  ) 
+                                  ? FileImage(File(imagePath))
                                   : imageUrl != null
-                                  ? NetworkImage(imageUrl)
-                                      as ImageProvider 
+                                  ? NetworkImage(imageUrl) as ImageProvider
                                   : null,
                           child:
                               (imagePath == null && imageUrl == null)

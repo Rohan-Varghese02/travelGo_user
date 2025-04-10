@@ -37,9 +37,11 @@ class VisibleState extends AuthActionState {
   VisibleState({required this.isVisible});
 }
 
-class ForgotPasswordState extends AuthState{}
-class ResetPasswordSuccess extends AuthState{}
-class ResetPasswordFailure extends AuthState{}
+class ForgotPasswordState extends AuthState {}
+
+class ResetPasswordSuccess extends AuthState {}
+
+class ResetPasswordFailure extends AuthState {}
 
 // Google Services
 class GoogleLoginSucess extends AuthState {
@@ -53,8 +55,6 @@ class GoogleLoginFailure extends AuthState {
 
   GoogleLoginFailure({required this.error});
 }
-
-
 
 //Register Screen
 
@@ -81,7 +81,8 @@ class ProfileImageUploading extends AuthState {}
 
 class ProfileImageUploaded extends AuthState {
   final String imageUrl;
-  ProfileImageUploaded(this.imageUrl);
+  final String imagePublicID;
+  ProfileImageUploaded(this.imageUrl, this.imagePublicID);
 }
 
 class ProfileError extends AuthState {
@@ -89,10 +90,10 @@ class ProfileError extends AuthState {
   ProfileError(this.message);
 }
 
-class RegisterationError extends AuthState{}
+class RegisterationError extends AuthState {}
 
-class RegisterSuccessful extends AuthState{}
+class RegisterSuccessful extends AuthState {}
 
-class NoImageState extends AuthState{}
+class NoImageState extends AuthState {}
 
-class LogoutApprove extends AuthState{}
+class LogoutApprove extends AuthState {}

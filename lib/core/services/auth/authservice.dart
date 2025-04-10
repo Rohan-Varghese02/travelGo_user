@@ -44,6 +44,7 @@ class Authservice {
     );
     log(userCredential.user!.displayName.toString());
     UserDataModel userModel = UserDataModel(
+      imagePublicID: 'null',
       uid: userCredential.user!.uid,
       email: userCredential.user!.email!,
       name: userCredential.user!.displayName ?? 'User',
@@ -72,6 +73,7 @@ class Authservice {
     role,
     phoneNumber,
     imageUrl,
+    imagePublicID,
   ) async {
     try {
       UserCredential userCredential = await firebaseAuth
@@ -84,6 +86,7 @@ class Authservice {
         password: password,
         phoneNumber: phoneNumber,
         imageUrl: imageUrl,
+        imagePublicID: imagePublicID,
       );
       firestore
           .collection("Users")

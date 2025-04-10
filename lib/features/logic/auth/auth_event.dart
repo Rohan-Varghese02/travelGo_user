@@ -75,8 +75,10 @@ class RegisterUser extends AuthEvent {
   final String password;
   final String phoneNumber;
   final String imageUrl;
+  final String imagePublicID;
 
   RegisterUser({
+    required this.imagePublicID,
     required this.name,
     required this.email,
     required this.password,
