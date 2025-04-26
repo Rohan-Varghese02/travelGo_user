@@ -64,7 +64,7 @@ class PostDataModel {
 
   factory PostDataModel.fromMap(Map<String, dynamic> map, String documentId) {
     return PostDataModel(
-      postId: documentId ?? '', // Assign doc ID manually
+      postId: documentId , // Assign doc ID manually
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
