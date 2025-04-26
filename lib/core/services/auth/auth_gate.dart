@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/view/screens/main_screen/main_screen.dart';
-import 'package:travelgo_user/features/view/screens/pages/home_page/home_page.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/login_screen/login_screen.dart';
 
 class AuthGate extends StatefulWidget {
