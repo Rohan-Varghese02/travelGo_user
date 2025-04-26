@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DividerWithOr extends StatelessWidget {
   const DividerWithOr({super.key});
@@ -14,10 +14,7 @@ class DividerWithOr extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           color: Colors.white,
-          child: Text(
-            "Or",
-            style: GoogleFonts.poppins(fontSize: 16, color: grey50),
-          ),
+          child: StyleText(text: 'Or', size: 16, color: grey99),
         ),
       ],
     );

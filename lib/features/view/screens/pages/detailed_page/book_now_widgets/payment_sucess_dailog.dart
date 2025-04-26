@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 paymentSuccessDaiolg(BuildContext context) {
   return showDialog(
@@ -18,20 +18,15 @@ paymentSuccessDaiolg(BuildContext context) {
                 height: 100,
               ),
               SizedBox(height: 20),
-              Text(
-                'Congratulations!',
-                style: GoogleFonts.poppins(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
+              StyleText(
+                text: 'Congratulations!',
+                size: 24,
+                fontWeight: FontWeight.w500,
               ),
-              Text(
-                'Your Order has been placed',
-                style: GoogleFonts.poppins(
-                  color: grey99,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
+              StyleText(
+                text: 'Your Order has been placed',
+                size: 18,
+                fontWeight: FontWeight.w500,
               ),
               SizedBox(height: 30),
               ElevatedButton(
@@ -46,10 +41,7 @@ paymentSuccessDaiolg(BuildContext context) {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                child: Text(
-                  'Go Back to Home Page',
-                  style: GoogleFonts.poppins(color: white),
-                ),
+                child: StyleText(text: 'Go Back to Home Page', color: white),
               ),
             ],
           ),

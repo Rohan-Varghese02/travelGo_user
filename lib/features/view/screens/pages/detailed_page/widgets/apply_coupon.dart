@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ApplyCoupon extends StatelessWidget {
   const ApplyCoupon({super.key});
@@ -32,12 +32,10 @@ class ApplyCoupon extends StatelessWidget {
           width: 70,
           height: 55,
           child: Center(
-            child: Text(
-              'Apply',
-              style: GoogleFonts.poppins(
-                color: white,
-                fontWeight: FontWeight.bold,
-              ),
+            child: StyleText(
+              text: 'Apply',
+              color: white,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

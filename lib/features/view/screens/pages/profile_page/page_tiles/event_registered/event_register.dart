@@ -4,7 +4,6 @@ import 'package:travelgo_user/core/services/stream_services.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/event_registered/widgets/event_registered_tile.dart';
-import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/payment_and_payouts/widgets/payment_list.dart';
 import 'package:travelgo_user/features/view/widgets/custom_app_bar.dart';
 
 class EventRegistered extends StatelessWidget {

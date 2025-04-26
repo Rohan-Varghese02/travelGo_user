@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class CustomListTile extends StatelessWidget {
   final int price;
@@ -37,19 +38,9 @@ class CustomListTile extends StatelessWidget {
                     color: lightTheme,
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text(
-                    post.category,
-                    style: GoogleFonts.poppins(color: themeColor, fontSize: 10),
-                  ),
+                  child: StyleText(text: post.category, color: themeColor,size: 10,),
                 ),
-                Text(
-                  post.name,
-                  style: GoogleFonts.poppins(
-                    color: black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                StyleText(text: post.name,size: 20,color: black, fontWeight: FontWeight.w500,),
                 Row(
                   children: [
                     Image(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/widgets/logout_dailog.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -18,13 +18,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-              title: Text(
-                title,
-                style: GoogleFonts.poppins(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              title: StyleText(text: title, size: 30,fontWeight: FontWeight.bold,),
               centerTitle: true,
               actions: [
                 BlocListener<AuthBloc, AuthState>(

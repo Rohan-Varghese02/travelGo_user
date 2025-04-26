@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -15,7 +15,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.showBack = false,
     required this.color,
-    this.backgroundColor, this.center,
+    this.backgroundColor,
+    this.center,
   });
 
   @override
@@ -27,13 +28,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         icon: Icon(Icons.arrow_back, color: color),
       ),
-      title: Text(
-        title,
-        style: GoogleFonts.poppins(
-          color: color,
-          fontSize: 26,
-          fontWeight: FontWeight.w500,
-        ),
+      title: StyleText(
+        text: title,
+        color: color,
+        size: 26,
+        fontWeight: FontWeight.w500,
       ),
       automaticallyImplyLeading: showBack,
       actions: actions,

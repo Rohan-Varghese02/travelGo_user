@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/ticket_arc_painter.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class TicketTile extends StatefulWidget {
   final String ticketType;
@@ -55,18 +56,17 @@ class _TicketTileState extends State<TicketTile> {
                 ),
               ),
               SizedBox(height: 5),
-              Text(
-                widget.ticketType,
-                style: GoogleFonts.poppins(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                  color: widget.isSelected ? Colors.blue : Colors.black,
-                ),
+              StyleText(
+                text: widget.ticketType,
+                size: 20,
+                fontWeight: FontWeight.w600,
+                color: widget.isSelected ? themeColor : black,
               ),
               SizedBox(height: 2),
-              Text(
-                'The number of ticket which are available: ${widget.count.toString()}',
-                style: GoogleFonts.poppins(fontSize: 14),
+              StyleText(
+                text:
+                    'The number of ticket which are available: ${widget.count.toString()}',
+                size: 14,
               ),
               SizedBox(height: 1),
 

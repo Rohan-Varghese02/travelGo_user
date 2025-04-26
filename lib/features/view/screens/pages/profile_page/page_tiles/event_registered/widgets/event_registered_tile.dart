@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/event_registered/widgets/ticket_page.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class EventRegisteredTile extends StatelessWidget {
   final PaymentModel receipt;
@@ -44,19 +44,15 @@ class EventRegisteredTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      receipt.postName,
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    StyleText(
+                      text: receipt.postName,
+                      size: 15,
+                      fontWeight: FontWeight.w700,
                     ),
-                    Text(
-                      formattedDate,
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                      ),
+                    StyleText(
+                      text: formattedDate,
+                      size: 16,
+                      fontWeight: FontWeight.w300,
                     ),
                   ],
                 ),
@@ -79,13 +75,11 @@ class EventRegisteredTile extends StatelessWidget {
                   color: themeColor,
                 ),
                 child: Center(
-                  child: Text(
-                    'View Ticket',
-                    style: GoogleFonts.poppins(
-                      color: white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: StyleText(
+                    text: 'View Ticket',
+                    color: white,
+                    size: 12,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

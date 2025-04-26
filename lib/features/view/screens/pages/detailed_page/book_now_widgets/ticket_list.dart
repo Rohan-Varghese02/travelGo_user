@@ -1,17 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/ticket_tile.dart';
 
 class TicketList extends StatefulWidget {
-  String? selectedTicketType;
+  final String? selectedTicketType;
 
   final Map<String, Map<String, dynamic>> tickets;
 
-  TicketList({super.key, required this.tickets, this.selectedTicketType});
+  const TicketList({super.key, required this.tickets, this.selectedTicketType});
 
   @override
   State<TicketList> createState() => _TicketListState();
@@ -35,7 +32,11 @@ class _TicketListState extends State<TicketList> {
                   return GestureDetector(
                     onTap: () {
                       context.read<PostBloc>().add(
-                        SelectTicket(ticketType: ticketType, price: price, count: count),
+                        SelectTicket(
+                          ticketType: ticketType,
+                          price: price,
+                          count: count,
+                        ),
                       );
                     },
                     child: TicketTile(

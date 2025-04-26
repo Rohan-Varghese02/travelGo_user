@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class BorderedListTile extends StatelessWidget {
   final String title;
@@ -29,7 +29,7 @@ class BorderedListTile extends StatelessWidget {
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
         leading: Icon(leadingIcon, color: themeColor),
-        title: Text(title, style: GoogleFonts.poppins(color: Colors.black)),
+        title: StyleText(text: title,color: black,),
         trailing: Icon(trailingIcon, color: grey30),
       ),
     );

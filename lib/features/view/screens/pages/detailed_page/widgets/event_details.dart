@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/detail_tile.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/detailed_date.dart';

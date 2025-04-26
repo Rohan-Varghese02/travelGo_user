@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DetailTile extends StatelessWidget {
   final String heading, assets, subtitle;
@@ -34,30 +34,23 @@ class DetailTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                heading,
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: white,
-                ),
+              StyleText(
+                text: heading,
+                size: 18,
+                color: white,
+                fontWeight: FontWeight.bold,
               ),
               extra == null
-                  ? Text(
-                    subtitle,
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      color: white,
-                    ),
+                  ? StyleText(
+                    text: subtitle,
+                    fontWeight: FontWeight.w500,
+                    size: 15,
+                    color: white,
                   )
-                  : Text(
-                    '$subtitle, $extra',
-                    style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15,
-                      color: white,
-                    ),
+                  : StyleText(
+                    text: '$subtitle, $extra',
+                    size: 15,
+                    color: white,
                   ),
             ],
           ),

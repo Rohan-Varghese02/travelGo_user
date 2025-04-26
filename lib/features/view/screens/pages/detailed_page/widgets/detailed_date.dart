@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DetailedDate extends StatelessWidget {
   final String date;
@@ -68,24 +68,20 @@ class DetailedDate extends StatelessWidget {
                   width: width,
                   color: themeColor,
                   child: Center(
-                    child: Text(
-                      monthAbbrev,
-                      style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: white,
-                      ),
+                    child: StyleText(
+                      text: monthAbbrev,
+                      fontWeight: FontWeight.w500,
+                      size: 18,
+                      color: white,
                     ),
                   ),
                 ),
                 SizedBox(height: 5),
-                Text(
-                  day.toString(),
-                  style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: black,
-                  ),
+                StyleText(
+                  text: day.toString(),
+                  size: 20,
+                  color: black,
+                  fontWeight: FontWeight.bold,
                 ),
               ],
             ),
@@ -94,21 +90,17 @@ class DetailedDate extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '$weekday, $year',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: white,
-                ),
+              StyleText(
+                text: '$weekday, $year',
+                size: 18,
+                color: white,
+                fontWeight: FontWeight.bold,
               ),
-              Text(
-                'Time will be updated',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                  color: white,
-                ),
+              StyleText(
+                text: 'Time will be updated',
+                size: 15,
+                color: white,
+                fontWeight: FontWeight.w500,
               ),
             ],
           ),

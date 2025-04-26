@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ExploreHeaderProfile extends StatelessWidget {
   final String name;
@@ -27,7 +28,7 @@ class ExploreHeaderProfile extends StatelessWidget {
             children: [
               CircleAvatar(backgroundImage: NetworkImage(image)),
               SizedBox(width: 10),
-              Text(name, style: GoogleFonts.poppins()),
+              StyleText(text: name)
             ],
           ),
         ),
@@ -37,13 +38,7 @@ class ExploreHeaderProfile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Explore the',
-                style: GoogleFonts.poppins(
-                  fontSize: 45,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
+              StyleText(text: 'Explore the',size: 45,fontWeight: FontWeight.w300,),
               Text.rich(
                 TextSpan(
                   text: 'Beautiful ',

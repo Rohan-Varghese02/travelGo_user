@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class PaymentList extends StatelessWidget {
   final PaymentModel receipt;
@@ -32,35 +32,27 @@ class PaymentList extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  receipt.postName,
-                  style: GoogleFonts.poppins(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w700,
-                  ),
+                StyleText(
+                  text: receipt.postName,
+                  size: 19,
+                  fontWeight: FontWeight.w700,
                 ),
-                Text(
-                  'Ticket Type : ${receipt.ticketType}',
-                  style: GoogleFonts.poppins(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                  ),
+                StyleText(
+                  text: 'Ticket Type : ${receipt.ticketType}',
+                  size: 15,
+                  fontWeight: FontWeight.w400,
                 ),
-                Text(
-                  'Number of tickets : ${receipt.totalTickets}',
-                  style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
+                StyleText(
+                  text: 'Number of tickets : ${receipt.totalTickets}',
+                  size: 14,
+                  fontWeight: FontWeight.w400,
                 ),
               ],
             ),
-            Text(
-              '₹ ${receipt.totalPrice}',
-              style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            StyleText(
+              text: '₹ ${receipt.totalPrice}',
+              size: 18,
+              fontWeight: FontWeight.bold,
             ),
           ],
         ),

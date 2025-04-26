@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DetailedBottom extends StatelessWidget {
   final int numberOfVariants;
@@ -31,13 +31,13 @@ class DetailedBottom extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Tickets variants',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                  StyleText(
+                    text: 'Tickets variants',
+                    fontWeight: FontWeight.w400,
                   ),
-                  Text(
-                    'Available: $numberOfVariants',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w400),
+                  StyleText(
+                    text: 'Available: $numberOfVariants',
+                    fontWeight: FontWeight.w400,
                   ),
                 ],
               ),
@@ -52,7 +52,7 @@ class DetailedBottom extends StatelessWidget {
               foregroundColor: black,
             ),
             onPressed: onPressed,
-            child: Text('Book Now', style: GoogleFonts.poppins(color: white)),
+            child: StyleText(text: 'Book Now', color: white),
           ),
         ],
       ),

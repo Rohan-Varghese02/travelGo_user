@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class JournalAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -9,10 +9,7 @@ class JournalAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        'Journal',
-        style: GoogleFonts.poppins(fontSize: 30, fontWeight: FontWeight.bold),
-      ),
+      title: StyleText(text: 'Journal',size: 30,fontWeight: FontWeight.bold,)
     );
   }
 

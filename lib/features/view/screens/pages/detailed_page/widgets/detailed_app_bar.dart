@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DetailedAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String postname;
@@ -15,13 +15,11 @@ class DetailedAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        'Event Details',
-        style: GoogleFonts.poppins(
-          color: white,
-          fontSize: 26,
-          fontWeight: FontWeight.w500,
-        ),
+      title: StyleText(
+        text: 'Event Details',
+        size: 26,
+        fontWeight: FontWeight.w500,
+        color: white,
       ),
       leading: IconButton(
         onPressed: () {

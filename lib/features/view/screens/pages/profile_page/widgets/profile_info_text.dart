@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ProfileInfoText extends StatelessWidget {
   final String name;
@@ -12,21 +12,13 @@ class ProfileInfoText extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Text(
-            name,
-            style: GoogleFonts.poppins(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          StyleText(text: name, size: 20, fontWeight: FontWeight.bold),
           SizedBox(height: 5),
-          Text(
-            email,
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: grey99,
-            ),
+          StyleText(
+            text: email,
+            size: 16,
+            fontWeight: FontWeight.bold,
+            color: grey99,
           ),
         ],
       ),

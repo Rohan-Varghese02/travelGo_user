@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class OrganizerPanel extends StatelessWidget {
   final OrganizerDataModel? organizerData;
@@ -33,19 +33,15 @@ class OrganizerPanel extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Organizer',
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
+                      StyleText(
+                        text: 'Organizer',
+                        size: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        organizerData!.name,
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
+                      StyleText(
+                        text: organizerData!.name,
+                        size: 15,
+                        fontWeight: FontWeight.w400,
                       ),
                     ],
                   ),
@@ -62,12 +58,10 @@ class OrganizerPanel extends StatelessWidget {
                     border: Border.all(color: themeColor),
                   ),
                   child: Center(
-                    child: Text(
-                      'Follow',
-                      style: GoogleFonts.poppins(
-                        color: white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: StyleText(
+                      text: 'Follow',
+                      fontWeight: FontWeight.bold,
+                      color: white,
                     ),
                   ),
                 ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DetailedHeader extends StatelessWidget {
   final String group, name;
@@ -14,13 +14,7 @@ class DetailedHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            name,
-            style: GoogleFonts.poppins(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          StyleText(text: name, size: 30, fontWeight: FontWeight.bold),
           Row(
             children: [
               Container(
@@ -46,10 +40,7 @@ class DetailedHeader extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 5),
-              Text(
-                group,
-                style: GoogleFonts.poppins(color: themeColor, fontSize: 18),
-              ),
+              StyleText(text: group, size: 18, color: themeColor),
             ],
           ),
         ],

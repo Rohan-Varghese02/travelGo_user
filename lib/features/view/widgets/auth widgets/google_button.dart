@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class GoogleButton extends StatelessWidget {
   final void Function()? onTap;
@@ -28,13 +28,7 @@ class GoogleButton extends StatelessWidget {
               height: 60,
               width: 60,
             ),
-            Text(
-              'Login with Google',
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            StyleText(text: 'Login with Google',size: 16,fontWeight: FontWeight.w500,),
           ],
         ),
       ),

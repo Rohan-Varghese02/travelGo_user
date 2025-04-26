@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class AboutBenefits extends StatelessWidget {
   final String about;
@@ -24,36 +24,19 @@ class AboutBenefits extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Event Details',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: white,
-                ),
+              StyleText(
+                text: 'Event Details',
+                size: 20,
+                fontWeight: FontWeight.bold,
+                color: white,
               ),
-              Text(
-                about,
-                style: GoogleFonts.poppins(
-                  color: white,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              StyleText(text: about, color: white, fontWeight: FontWeight.w400),
               SizedBox(height: 5),
-              Text(
-                'Benefits:',
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  color: white,
-                ),
-              ),
-              Text(
-                benefits,
-                style: GoogleFonts.poppins(
-                  color: white,
-                  fontWeight: FontWeight.w400,
-                ),
+              StyleText(text: 'Benefits:', size: 18, color: white),
+              StyleText(
+                text: benefits,
+                color: white,
+                fontWeight: FontWeight.w400,
               ),
             ],
           ),

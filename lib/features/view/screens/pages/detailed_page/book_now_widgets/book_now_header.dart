@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class BookNowHeader extends StatelessWidget {
   const BookNowHeader({super.key});
@@ -8,10 +8,7 @@ class BookNowHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          'Choose Ticket',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 24),
-        ),
+        StyleText(text: 'Choose Ticket', fontWeight: FontWeight.w500, size: 24),
         Divider(),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class FilterMenuWidget extends StatefulWidget {
   final String? selectedCategory;
@@ -92,7 +93,7 @@ class _FilterMenuWidgetState extends State<FilterMenuWidget> {
             onPressed: () {
               widget.onFilterApply(_category, _country);
             },
-            child: Text('Apply Filters'),
+            child: StyleText(text: 'Apply Filter'),
           ),
         ],
       ),
