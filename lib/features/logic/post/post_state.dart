@@ -28,22 +28,33 @@ class OrganizerGet extends PostState {
 class BookNowState extends PostState {}
 
 class TicketSelected extends PostState {
-    final int count;
+  final int count;
   final int price;
   final String selectTicketType;
 
-  TicketSelected({required this.selectTicketType,required this.count,required this.price, });
+  TicketSelected({
+    required this.selectTicketType,
+    required this.count,
+    required this.price,
+  });
 }
 
-class IncrementedTicket extends PostState{
+class IncrementedTicket extends PostState {
   final int ticketCount;
 
   IncrementedTicket({required this.ticketCount});
-
 }
-class DecrementedTicket extends PostState{
-    final int ticketCount;
+
+class DecrementedTicket extends PostState {
+  final int ticketCount;
 
   DecrementedTicket({required this.ticketCount});
-
 }
+
+class PaymentSuccess extends PostState {
+  final String paymentID;
+
+  PaymentSuccess({required this.paymentID});
+}
+
+class PaymentFailed extends PostState {}

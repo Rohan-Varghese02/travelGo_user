@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:travelgo_user/core/constants/stripe_constants.dart';
+
 class StripeServices {
   StripeServices._();
 
@@ -8,11 +9,12 @@ class StripeServices {
 
   Future<String?> makePayment(int amount) async {
     try {
-      final paymentIntentData = await _createPaymentIntent(amount, "usd");
+      final paymentIntentData = await _createPaymentIntent(amount, "inr");
 
       if (paymentIntentData == null) return null;
 
-      final String paymentIntentClientSecret = paymentIntentData['client_secret'];
+      final String paymentIntentClientSecret =
+          paymentIntentData['client_secret'];
       final String paymentIntentId = paymentIntentData['id'];
 
       await Stripe.instance.initPaymentSheet(
@@ -22,16 +24,23 @@ class StripeServices {
         ),
       );
 
-      await processPayment();
+      final bool isSuccess = await processPayment();
 
-      return paymentIntentId; // Return the payment ID here
+      if (isSuccess) {
+        return paymentIntentId;
+      } else {
+        return null;
+      }
     } catch (e) {
-      print(e);
+      print("makePayment error: $e");
       return null;
     }
   }
 
-  Future<Map<String, dynamic>?> _createPaymentIntent(int amount, String currency) async {
+  Future<Map<String, dynamic>?> _createPaymentIntent(
+    int amount,
+    String currency,
+  ) async {
     try {
       final Dio dio = Dio();
       Map<String, dynamic> data = {
@@ -55,21 +64,26 @@ class StripeServices {
         print(response.data);
         return {
           "client_secret": response.data['client_secret'],
-          "id": response.data['id'], // Payment ID
+          "id": response.data['id'],
         };
       }
       return null;
     } catch (e) {
-      print(e);
+      print("createPaymentIntent error: $e");
       return null;
     }
   }
 
-  Future<void> processPayment() async {
+  Future<bool> processPayment() async {
     try {
       await Stripe.instance.presentPaymentSheet();
+      return true;
+    } on StripeException catch (e) {
+      print("StripeException: ${e.error.localizedMessage}");
+      return false;
     } catch (e) {
-      print(e);
+      print("Unknown error in processPayment: $e");
+      return false;
     }
   }
 

@@ -28,7 +28,7 @@ class BorderedListTile extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-        leading: Icon(leadingIcon, color: grey99),
+        leading: Icon(leadingIcon, color: themeColor),
         title: Text(title, style: GoogleFonts.poppins(color: Colors.black)),
         trailing: Icon(trailingIcon, color: grey30),
       ),

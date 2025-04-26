@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
+import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 
 class FirestoreService {
@@ -9,6 +12,15 @@ class FirestoreService {
         .collection('Users')
         .doc(userData.uid)
         .update(userData.toMap());
+  }
+
+  Future<void> paymentRecipetinFiresttore(PaymentModel payment) async {
+    await firestore
+        .collection('Users')
+        .doc(payment.userUid)
+        .collection('payments')
+        .doc()
+        .set(payment.toMap());
   }
 
   Future<UserDataModel> getUser(String uid) async {
@@ -23,4 +35,39 @@ class FirestoreService {
 
     return OrganizerDataModel.fromMap(doc.data()!);
   }
+}
+
+Future<void> updateTicketCount({
+  required String postId,
+  required String ticketType,
+  required int quantityToBuy,
+}) async {
+  final postRef = FirebaseFirestore.instance.collection('post').doc(postId);
+
+  await FirebaseFirestore.instance.runTransaction((transaction) async {
+    log('Ticket Updating');
+    final snapshot = await transaction.get(postRef);
+
+    if (!snapshot.exists) {
+      throw Exception("Post not found");
+    }
+
+    final data = snapshot.data();
+    if (data == null || data['tickets'] == null) {
+      throw Exception("Tickets data not found");
+    }
+
+    final tickets = Map<String, dynamic>.from(data['tickets']);
+    final ticketDetails = Map<String, dynamic>.from(tickets[ticketType]);
+
+    final currentCount = ticketDetails['count'];
+    if (currentCount < quantityToBuy) {
+      throw Exception("Not enough tickets available");
+    }
+
+    ticketDetails['count'] = currentCount - quantityToBuy;
+    tickets[ticketType] = ticketDetails;
+
+    transaction.update(postRef, {'tickets': tickets});
+  });
 }

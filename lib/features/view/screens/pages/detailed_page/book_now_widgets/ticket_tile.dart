@@ -74,7 +74,7 @@ class _TicketTileState extends State<TicketTile> {
               Center(
                 child: Text.rich(
                   TextSpan(
-                    text: '\$${widget.price.toString()}',
+                    text: '₹${widget.price.toString()}',
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       color: widget.isSelected ? darkthemeColor : black,

@@ -4,7 +4,9 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgo_user/core/services/firestore_services.dart';
+import 'package:travelgo_user/core/services/stripe_services.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
+import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
 
 part 'post_event.dart';
@@ -17,6 +19,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<SelectTicket>(selectTicket);
     on<IncrementTicket>(incrementTicket);
     on<DecrementTicket>(decrementTicket);
+    on<PaymentIntiate>(paymentIntiate);
   }
 
   FutureOr<void> fetchOrganizerDetails(
@@ -34,7 +37,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
   FutureOr<void> selectTicket(SelectTicket event, Emitter<PostState> emit) {
     log(event.ticketType);
-    emit(TicketSelected(selectTicketType: event.ticketType, count: event.count, price: event.price));
+    emit(
+      TicketSelected(
+        selectTicketType: event.ticketType,
+        count: event.count,
+        price: event.price,
+      ),
+    );
   }
 
   FutureOr<void> incrementTicket(
@@ -48,11 +57,34 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     emit(IncrementedTicket(ticketCount: count));
   }
 
-  FutureOr<void> decrementTicket(DecrementTicket event, Emitter<PostState> emit) {
+  FutureOr<void> decrementTicket(
+    DecrementTicket event,
+    Emitter<PostState> emit,
+  ) {
     int count = event.ticketCount;
     log(event.ticketCount.toString());
     count--;
     log(count.toString());
     emit(DecrementedTicket(ticketCount: count));
+  }
+
+  FutureOr<void> paymentIntiate(
+    PaymentIntiate event,
+    Emitter<PostState> emit,
+  ) async {
+    String? paymentID = await StripeServices.instance.makePayment(
+      event.totalPrice,
+    );
+    if (paymentID != null) {
+      await FirestoreService().paymentRecipetinFiresttore(event.paymentData);
+      await updateTicketCount(
+        postId: event.paymentData.postID,
+        ticketType: event.paymentData.ticketType,
+        quantityToBuy: event.paymentData.totalTickets,
+      );
+      emit(PaymentSuccess(paymentID: paymentID));
+    } else {
+      emit(PaymentFailed());
+    }
   }
 }

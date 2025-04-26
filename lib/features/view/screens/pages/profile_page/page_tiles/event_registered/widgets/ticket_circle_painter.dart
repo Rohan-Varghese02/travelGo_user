@@ -2,25 +2,23 @@
 import 'package:flutter/material.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 
-class HalfCirclePainter extends CustomPainter {
-  final bool isSelected;
+class TicketCirclePainter extends CustomPainter {
   final bool isRight;
-  HalfCirclePainter({
+  TicketCirclePainter({
     super.repaint,
     required this.isRight,
-    required this.isSelected,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
     final Paint fillPaint =
         Paint()
-          ..color = white
+          ..color = themeColor
           ..style = PaintingStyle.fill;
 
     final Paint borderPaint =
         Paint()
-          ..color = isSelected ? themeColor : grey20
+          ..color =  themeColor 
           ..strokeWidth = 3
           ..style = PaintingStyle.stroke;
     final Rect arcRect = Rect.fromLTWH(
@@ -33,8 +31,8 @@ class HalfCirclePainter extends CustomPainter {
       final Path arcPath =
           Path()..arcTo(
             arcRect,
-            -1.5 * 3.1416,
-            3.1416, 
+            -1.5 * 3.1416, // Start angle (top)
+            3.1416, // Sweep angle (half circle)
             false,
           );
       final Path fillPath =
@@ -49,8 +47,8 @@ class HalfCirclePainter extends CustomPainter {
       final Path arcPath =
           Path()..arcTo(
             arcRect,
-            1.5 * 3.1416, 
-            3.1416, 
+            1.5 * 3.1416, // Start angle (top)
+            3.1416, // Sweep angle (half circle)
             false,
           );
       final Path fillPath =
@@ -60,9 +58,9 @@ class HalfCirclePainter extends CustomPainter {
             ..lineTo(0, size.height)
             ..close();
       canvas.drawPath(fillPath, fillPaint);
-      canvas.drawPath(arcPath, borderPaint); 
+      canvas.drawPath(arcPath, borderPaint); // Optional border
     }
-  
+    // Fill the arc (create a closed shape manually if needed)
   }
 
   @override

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/view/screens/pages/search_page/searchpage.dart';
 
 class SearchBox extends StatelessWidget {
-  const SearchBox({super.key});
+  final UserDataModel userdata;
+  const SearchBox({super.key, required this.userdata});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class SearchBox extends StatelessWidget {
       onTap: () {
         Navigator.of(
           context,
-        ).push(MaterialPageRoute(builder: (context) => Searchpage()));
+        ).push(MaterialPageRoute(builder: (context) => Searchpage(userdata: userdata,)));
       },
       child: Container(
         width: width,

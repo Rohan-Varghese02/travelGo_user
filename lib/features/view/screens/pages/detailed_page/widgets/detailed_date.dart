@@ -57,7 +57,7 @@ class DetailedDate extends StatelessWidget {
             width: 70,
             height: 70,
             decoration: BoxDecoration(
-              color: lightTheme,
+              color: white,
               border: Border.all(color: themeColor, width: 3),
               borderRadius: BorderRadius.circular(10),
             ),
@@ -73,6 +73,7 @@ class DetailedDate extends StatelessWidget {
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 18,
+                        color: white,
                       ),
                     ),
                   ),
@@ -83,6 +84,7 @@ class DetailedDate extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
+                    color: black,
                   ),
                 ),
               ],
@@ -97,6 +99,7 @@ class DetailedDate extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
+                  color: white,
                 ),
               ),
               Text(
@@ -104,6 +107,7 @@ class DetailedDate extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w500,
                   fontSize: 15,
+                  color: white,
                 ),
               ),
             ],

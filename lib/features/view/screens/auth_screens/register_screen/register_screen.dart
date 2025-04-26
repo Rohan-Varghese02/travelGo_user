@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
@@ -34,7 +32,6 @@ class RegisterScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8),
             child: BlocListener<AuthBloc, AuthState>(
               listener: (context, state) {
-                log(state.runtimeType.toString());
                 if (state is ReturnToLogin) {
                   Navigator.of(context).pop();
                 } else if (state is PasswordConfirmedPassDifferent) {
@@ -134,7 +131,6 @@ class RegisterScreen extends StatelessWidget {
                       text: 'Continue',
                       onPressed: () {
                         if (key.currentState!.validate()) {
-                          log('pressed');
                           context.read<AuthBloc>().add(
                             RegisterButtonEvent(
                               email: emailRegController.text,

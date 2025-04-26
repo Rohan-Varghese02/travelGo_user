@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ForgotPass extends StatelessWidget {
   const ForgotPass({super.key});
@@ -10,21 +10,20 @@ class ForgotPass extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
-          'Forgot your password? ',
-          style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w200),
+        StyleText(
+          text: 'Forgot your password? ',
+          size: 14,
+          fontWeight: FontWeight.w200,
         ),
         GestureDetector(
           onTap: () {
             context.read<AuthBloc>().add(ForgotPasswordEvent());
           },
-          child: Text(
-            'Reset your password',
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
-            ),
+          child: StyleText(
+            text: 'Reset your password',
+            size: 14,
+            fontWeight: FontWeight.w500,
+            decoration: TextDecoration.underline,
           ),
         ),
       ],

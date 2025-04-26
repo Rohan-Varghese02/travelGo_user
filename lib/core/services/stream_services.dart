@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travelgo_user/data/models/category_model.dart';
+import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
 
 class StreamServices {
@@ -16,6 +17,18 @@ class StreamServices {
         );
   }
 
+Stream<List<PaymentModel>> getReciept(String userId) {
+  return firestore
+      .collection('Users')
+      .doc(userId)
+      .collection('payments')
+      .snapshots()
+      .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => PaymentModel.fromFirestore(doc))
+            .toList();
+      });
+}
   Stream<List<PostDataModel>> getFilteredPosts(
     String searchQuery, {
     String? category,

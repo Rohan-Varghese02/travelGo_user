@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class RegisterDailog extends StatelessWidget {
   final void Function()? onPressed;
@@ -17,10 +18,10 @@ class RegisterDailog extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             backgroundColor: themeColor,
-            foregroundColor: Colors.white,
+            foregroundColor: white,
           ),
           onPressed: onPressed,
-          child: Text('Go back'),
+          child: StyleText(text: 'Go back'),
         ),
       ],
     );

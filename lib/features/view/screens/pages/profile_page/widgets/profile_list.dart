@@ -19,7 +19,9 @@ class ProfileList extends StatelessWidget {
             title: 'Edit Profile',
             leadingIcon: FontAwesomeIcons.user,
             onTap: () {
-              context.read<UserBloc>().add(FullProfileEvent(userData: userData));
+              context.read<UserBloc>().add(
+                FullProfileEvent(userData: userData),
+              );
             },
           ),
           BorderedListTile(
@@ -30,7 +32,11 @@ class ProfileList extends StatelessWidget {
           BorderedListTile(
             title: 'Event Registered',
             leadingIcon: FontAwesomeIcons.calendarXmark,
-            onTap: () {},
+            onTap: () {
+              context.read<UserBloc>().add(
+                EventRegisterClicked(userData: userData),
+              );
+            },
           ),
           BorderedListTile(
             title: 'Organizers Following',
@@ -40,7 +46,11 @@ class ProfileList extends StatelessWidget {
           BorderedListTile(
             title: 'Payment and Payouts',
             leadingIcon: FontAwesomeIcons.creditCard,
-            onTap: () {},
+            onTap: () {
+              context.read<UserBloc>().add(
+                PaymentAndPayoutClicked(userData: userData),
+              );
+            },
           ),
         ],
       ),

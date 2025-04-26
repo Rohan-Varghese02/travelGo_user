@@ -39,6 +39,21 @@ class ProfileUpdateSuccess extends UserState {}
 
 class ProfileUpdateFailed extends UserState {}
 
-
 /// Journal
 class JournalAddPage extends UserState {}
+
+// Navigate to Payment and Payouts
+
+class NavigatePaymentPayout extends UserState {
+  final UserDataModel userData;
+
+  NavigatePaymentPayout({required this.userData});
+}
+
+// Navigate to Event Registered
+
+class NavigateEventRegistered extends UserState {
+  final UserDataModel userData;
+
+  NavigateEventRegistered({required this.userData});
+}

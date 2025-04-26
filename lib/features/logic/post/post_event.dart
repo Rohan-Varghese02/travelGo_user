@@ -22,7 +22,11 @@ class SelectTicket extends PostEvent {
   final int price;
   final String ticketType;
 
-  SelectTicket({required this.ticketType,required this.count,required this.price,});
+  SelectTicket({
+    required this.ticketType,
+    required this.count,
+    required this.price,
+  });
 }
 
 class IncrementTicket extends PostEvent {
@@ -35,4 +39,10 @@ class DecrementTicket extends PostEvent {
   final int ticketCount;
 
   DecrementTicket({required this.ticketCount});
+}
+
+class PaymentIntiate extends PostEvent {
+  final int totalPrice;
+  final PaymentModel paymentData;
+  PaymentIntiate({required this.totalPrice, required this.paymentData});
 }

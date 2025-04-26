@@ -3,26 +3,23 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
+import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/book_now_sheet.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/about_benefits.dart';
-import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/apply_coupon.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/detailed_app_bar.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/detailed_bottom.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/detailed_header.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/event_details.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/event_pic.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/organizer_panel.dart';
-import 'package:travelgo_user/features/view/widgets/custom_app_bar.dart';
 
 class DetailedPage extends StatefulWidget {
+  final UserDataModel userData;
   final PostDataModel post;
-  const DetailedPage({super.key, required this.post});
+  const DetailedPage({super.key, required this.post, required this.userData});
 
   @override
   State<DetailedPage> createState() => _DetailedPageState();
@@ -57,7 +54,12 @@ class _DetailedPageState extends State<DetailedPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
             ),
-            builder: (context) => BookNowSheet(tickets: widget.post.tickets),
+            builder:
+                (context) => BookNowSheet(
+                  tickets: widget.post.tickets,
+                  userData: widget.userData,
+                  organizerUid: organizerData!.uid, post: widget.post,
+                ),
           );
         }
       },

@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
                   image: userdata.imageUrl,
                 ),
                 SizedBox(height: 20),
-                SearchBox(),
+                SearchBox(userdata: userdata,),
                 SizedBox(height: 20),
                 HeadingText(text: 'Countries'),
                 SizedBox(height: 20),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 void forgotPasswordDailog(BuildContext context) {
   final TextEditingController controller = TextEditingController();
@@ -13,14 +14,11 @@ void forgotPasswordDailog(BuildContext context) {
     builder: (context) {
       return AlertDialog(
         backgroundColor: Colors.white,
-        title: Text(
-          "Forgot password",
-          style: GoogleFonts.poppins(color: themeColor),
-        ),
+        title: StyleText(text: 'Forgot passwrod', color: themeColor),
         content: Form(
           key: key_state,
           child: SizedBox(
-            height: 130,
+            height: 150,
             child: Column(
               children: [
                 TextFormField(
@@ -41,9 +39,9 @@ void forgotPasswordDailog(BuildContext context) {
                   },
                 ),
                 SizedBox(height: 20),
-                Text(
-                  'Link will be sent to the given email address to reset the password',
-                  style: GoogleFonts.poppins(),
+                StyleText(
+                  text:
+                      'Link will be sent to the given email address to reset the password',
                 ),
               ],
             ),
@@ -52,10 +50,7 @@ void forgotPasswordDailog(BuildContext context) {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text(
-              "Cancel",
-              style: GoogleFonts.poppins(color: Colors.black),
-            ),
+            child: StyleText(text: 'Cancel', color: black),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -73,7 +68,7 @@ void forgotPasswordDailog(BuildContext context) {
                 Navigator.of(context).pop();
               }
             },
-            child: Text("Send", style: GoogleFonts.poppins()),
+            child: StyleText(text: 'Send', color: white),
           ),
         ],
       );

@@ -23,6 +23,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     // Journal Page Events
     on<JournalAddEvent>(journalAddEvent);
+    // Payment and payout
+    on<PaymentAndPayoutClicked>(paymentAndPayoutClicked);
+    // event Registered
+    on<EventRegisterClicked>(eventRegisterClicked);
   }
 
   // Profile Page ---- Events
@@ -115,5 +119,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       log(e.toString());
       emit(ProfileImageUpdateFailed(message: 'Some error'));
     }
+  }
+
+  FutureOr<void> paymentAndPayoutClicked(
+    PaymentAndPayoutClicked event,
+    Emitter<UserState> emit,
+  ) {
+    emit(NavigatePaymentPayout(userData: event.userData));
+  }
+
+  FutureOr<void> eventRegisterClicked(
+    EventRegisterClicked event,
+    Emitter<UserState> emit,
+  ) {
+    emit(NavigateEventRegistered(userData: event.userData));
   }
 }

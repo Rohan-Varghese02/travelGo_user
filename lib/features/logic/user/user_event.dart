@@ -13,9 +13,9 @@ class FullProfileEvent extends UserEvent {
 }
 // Profile Page ----Update Profile Events
 
-class UpdateImageEvent extends UserEvent{}
+class UpdateImageEvent extends UserEvent {}
 
-class ProfileUpdatIntiate extends UserEvent{}
+class ProfileUpdatIntiate extends UserEvent {}
 
 class UpdateProfileEvent extends UserEvent {
   final String imagePublicID;
@@ -26,7 +26,6 @@ class UpdateProfileEvent extends UserEvent {
   final String email;
   final String phone;
 
-
   UpdateProfileEvent({
     required this.imagePublicID,
     required this.imageUrl,
@@ -36,9 +35,21 @@ class UpdateProfileEvent extends UserEvent {
     required this.email,
     required this.phone,
   });
-
 }
 
 ///Journal
 
 class JournalAddEvent extends UserEvent {}
+
+// Payment and payout
+class PaymentAndPayoutClicked extends UserEvent {
+  final UserDataModel userData;
+
+  PaymentAndPayoutClicked({required this.userData});
+}
+
+class EventRegisterClicked extends UserEvent {
+  final UserDataModel userData;
+
+  EventRegisterClicked({required this.userData});
+}

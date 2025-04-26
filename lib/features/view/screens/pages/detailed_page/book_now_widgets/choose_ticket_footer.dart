@@ -4,20 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
-import 'package:travelgo_user/core/services/stripe_services.dart';
+import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
 
 class ChooseTicketFooter extends StatelessWidget {
+  final String postName;
+  final String postID;
+  final String organizerUid;
+  final String userUid;
   final String? selectedTicketType;
   final int ticketCount;
   final int count;
   final int price;
+  final String postImage,country,venue,date;
   const ChooseTicketFooter({
     super.key,
     this.selectedTicketType,
     required this.ticketCount,
     required this.count,
     required this.price,
+    required this.userUid,
+    required this.organizerUid,
+    required this.postName,
+    required this.postID,
+    required this.postImage, required this.country, required this.venue, required this.date,
   });
 
   @override
@@ -59,7 +69,10 @@ class ChooseTicketFooter extends StatelessWidget {
             ),
           ],
         ),
-        Text('Total Amount : ${price * ticketCount}'),
+        Text(
+          'Total Amount : ₹${price * ticketCount}',
+          style: GoogleFonts.poppins(fontSize: 18),
+        ),
         SizedBox(height: 20),
         Container(
           decoration: BoxDecoration(
@@ -70,13 +83,25 @@ class ChooseTicketFooter extends StatelessWidget {
             onPressed:
                 selectedTicketType == null || ticketCount == 0
                     ? null
-                    : () async {
+                    : () {
+                      log(userUid);
+                      log(organizerUid);
                       int totalPrice = price * ticketCount;
-                      String? paymentID = await StripeServices.instance
-                          .makePayment(totalPrice);
-
-                      log(
-                        'Proceeding with: $selectedTicketType, $totalPrice, payment ID: $paymentID',
+                      PaymentModel payment = PaymentModel(
+                        postImage: postImage,
+                        userUid: userUid,
+                        organizerUid: organizerUid,
+                        totalTickets: ticketCount,
+                        totalPrice: totalPrice,
+                        ticketType: selectedTicketType!,
+                        postName: postName,
+                        postID: postID, country: country, venue: venue, date: date,
+                      );
+                      context.read<PostBloc>().add(
+                        PaymentIntiate(
+                          totalPrice: totalPrice,
+                          paymentData: payment,
+                        ),
                       );
                     },
             style: ElevatedButton.styleFrom(
@@ -87,10 +112,22 @@ class ChooseTicketFooter extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text(
-              "Continue",
-              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
-            ),
+            child:
+                count != 0
+                    ? Text(
+                      "Continue",
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: white,
+                      ),
+                    )
+                    : Text(
+                      'Full Booked',
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        color: black,
+                      ),
+                    ),
           ),
         ),
       ],

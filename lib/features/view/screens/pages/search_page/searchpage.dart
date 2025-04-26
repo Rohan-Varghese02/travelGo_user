@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/services/stream_services.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
+import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/detailed_page.dart';
 import 'package:travelgo_user/features/view/screens/pages/search_page/widgets/custom_list_tile.dart';
 import 'package:travelgo_user/features/view/screens/pages/search_page/widgets/filter_menu.dart';
 
 class Searchpage extends StatefulWidget {
-  const Searchpage({super.key});
+  final UserDataModel userdata;
+  const Searchpage({super.key, required this.userdata});
 
   @override
   State<Searchpage> createState() => _SearchpageState();
@@ -103,7 +105,11 @@ class _SearchpageState extends State<Searchpage> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => DetailedPage(post: post),
+                              builder:
+                                  (context) => DetailedPage(
+                                    post: post,
+                                    userData: widget.userdata,
+                                  ),
                             ),
                           );
                         },

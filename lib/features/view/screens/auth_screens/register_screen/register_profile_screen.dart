@@ -1,13 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/features/logic/auth/auth_bloc.dart';
 import 'package:travelgo_user/features/view/screens/auth_screens/register_screen/widgets/register_dailog.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text_field.dart';
 import 'package:travelgo_user/features/view/widgets/long_button.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class RegisterProfileScreen extends StatefulWidget {
   final String email;
@@ -49,8 +47,6 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                   } else if (state is ProfileImageUploaded) {
                     imagePublicId = state.imagePublicID;
                     imageUrl = state.imageUrl;
-                    log(state.imagePublicID);
-                    log(state.imageUrl);
                     context.read<AuthBloc>().add(
                       RegisterUser(
                         imagePublicID: imagePublicId,
@@ -62,7 +58,6 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                       ),
                     );
                   } else if (state is RegisterSuccessful) {
-                    log('Register success');
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
@@ -91,18 +86,15 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                   return Column(
                     children: [
                       SizedBox(height: 20),
-                      Text(
-                        'Profile',
-                        style: GoogleFonts.poppins(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      StyleText(
+                        text: 'Profile',
+                        size: 18,
+                        fontWeight: FontWeight.w500,
                       ),
                       SizedBox(height: 40),
 
                       GestureDetector(
                         onTap: () {
-                          log('Profile pic to be uploaded');
                           context.read<AuthBloc>().add(PickImageEvent());
                         },
                         child: CircleAvatar(
@@ -150,12 +142,6 @@ class _RegisterProfileScreenState extends State<RegisterProfileScreen> {
                           } else {
                             context.read<AuthBloc>().add(NoImageEvent());
                           }
-
-                          log(nameController.text);
-                          log(emailController.text);
-                          log(phoneController.text);
-                          log(widget.password);
-                          log(imageUrl.toString());
                         },
                       ),
                     ],

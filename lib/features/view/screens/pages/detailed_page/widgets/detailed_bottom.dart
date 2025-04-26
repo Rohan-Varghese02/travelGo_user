@@ -52,7 +52,7 @@ class DetailedBottom extends StatelessWidget {
               foregroundColor: black,
             ),
             onPressed: onPressed,
-            child: Text('Book Now'),
+            child: Text('Book Now', style: GoogleFonts.poppins(color: white)),
           ),
         ],
       ),

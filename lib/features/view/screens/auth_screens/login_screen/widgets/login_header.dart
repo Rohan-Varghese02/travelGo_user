@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -30,10 +31,10 @@ class LoginHeader extends StatelessWidget {
             ],
           ),
         ),
-
-        Text(
-          'It\'s great to see you again',
-          style: GoogleFonts.poppins(color: grey50, fontSize: 16),
+        StyleText(
+          text: 'It\'s great to see you again',
+          color: grey50,
+          size: 16,
         ),
       ],
     );

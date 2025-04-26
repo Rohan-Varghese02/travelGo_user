@@ -39,7 +39,7 @@ class CustomListTile extends StatelessWidget {
                   ),
                   child: Text(
                     post.category,
-                    style: GoogleFonts.poppins(color: black, fontSize: 10),
+                    style: GoogleFonts.poppins(color: themeColor, fontSize: 10),
                   ),
                 ),
                 Text(

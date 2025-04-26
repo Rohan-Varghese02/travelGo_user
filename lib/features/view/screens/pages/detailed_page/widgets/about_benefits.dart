@@ -29,19 +29,32 @@ class AboutBenefits extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
+                  color: white,
                 ),
               ),
-              Text(about, style: GoogleFonts.poppins()),
+              Text(
+                about,
+                style: GoogleFonts.poppins(
+                  color: white,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               SizedBox(height: 5),
               Text(
                 'Benefits:',
                 style: GoogleFonts.poppins(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
-                  color: black,
+                  color: white,
                 ),
               ),
-              Text(benefits, style: GoogleFonts.poppins()),
+              Text(
+                benefits,
+                style: GoogleFonts.poppins(
+                  color: white,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ],
           ),
         ),
