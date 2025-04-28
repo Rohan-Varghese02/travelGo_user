@@ -42,7 +42,7 @@ class CountryList extends StatelessWidget {
                     border: Border.all(color: themeColor),
                     borderRadius: BorderRadius.circular(17),
                   ),
-                  child: Center(child: StyleText(text: categories[index].name)),
+                  child: Center(child: StyleText(text: categories[index].name, color: white,)),
                 ),
               );
             },

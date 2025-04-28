@@ -6,7 +6,6 @@ import 'package:travelgo_user/features/logic/nav/nav_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BottomNavBar extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavBloc, NavState>(
@@ -30,9 +29,9 @@ class BottomNavBar extends StatelessWidget {
               context.read<NavBloc>().add(NavItemSelected(index: index));
             },
             tabs: [
-              GButton(icon: FontAwesomeIcons.magnifyingGlass, text: 'Explore'),
               GButton(icon: FontAwesomeIcons.newspaper, text: 'Blog'),
               GButton(icon: FontAwesomeIcons.bookBookmark, text: 'Journal'),
+              GButton(icon: FontAwesomeIcons.magnifyingGlass, text: 'Explore'),
               GButton(icon: FontAwesomeIcons.message, text: 'Chat'),
               GButton(icon: FontAwesomeIcons.user, text: 'Profile'),
             ],

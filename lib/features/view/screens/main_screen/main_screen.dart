@@ -16,9 +16,9 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      HomePage(userdata: userdata,),
       BlogPage(),
       JournalPage(),
+      HomePage(userdata: userdata),
       ChatPage(),
       ProfilePage(),
     ];

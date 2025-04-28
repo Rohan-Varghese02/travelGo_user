@@ -8,7 +8,7 @@ sealed class NavState {
 }
 
 final class NavInitial extends NavState {
-  NavInitial() : super(index: 0);
+  NavInitial() : super(index: 2);
 }
 
 class NavUpdated extends NavState {

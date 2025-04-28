@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travelgo_user/data/models/category_model.dart';
+import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
 
@@ -17,18 +18,55 @@ class StreamServices {
         );
   }
 
-Stream<List<PaymentModel>> getReciept(String userId) {
-  return firestore
-      .collection('Users')
-      .doc(userId)
-      .collection('payments')
-      .snapshots()
-      .map((snapshot) {
-        return snapshot.docs
-            .map((doc) => PaymentModel.fromFirestore(doc))
-            .toList();
-      });
-}
+  Stream<List<OrganizerDataModel>> getOrganizerHome() {
+    return firestore
+        .collection('Organizers')
+        .snapshots()
+        .map(
+          (snapshot) =>
+              snapshot.docs
+                  .map((doc) => OrganizerDataModel.fromFireStore(doc))
+                  .toList(),
+        );
+  }
+
+  Stream<List<Category>> categoryStream() {
+    return firestore
+        .collection('categories')
+        .where('type', isEqualTo: 'event')
+        .snapshots()
+        .map(
+          (snapshot) =>
+              snapshot.docs.map((doc) => Category.fromFirestore(doc)).toList(),
+        );
+  }
+
+  Stream<List<PostDataModel>> getPostCategory(String category) {
+    return firestore
+        .collection('post')
+        .where('category', isEqualTo: category)
+        .snapshots()
+        .map(
+          (snaphot) =>
+              snaphot.docs
+                  .map((doc) => PostDataModel.fromFirestore(doc))
+                  .toList(),
+        );
+  }
+
+  Stream<List<PaymentModel>> getReciept(String userId) {
+    return firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('payments')
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs
+              .map((doc) => PaymentModel.fromFirestore(doc))
+              .toList();
+        });
+  }
+
   Stream<List<PostDataModel>> getFilteredPosts(
     String searchQuery, {
     String? category,
