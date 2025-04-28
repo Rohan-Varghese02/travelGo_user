@@ -18,6 +18,15 @@ class StreamServices {
         );
   }
 
+  Stream<OrganizerDataModel> getOrganizerByUid(String uid) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    return firestore
+        .collection('Organizers')
+        .doc(uid)
+        .snapshots()
+        .map((doc) => OrganizerDataModel.fromFireStore(doc));
+  }
+
   Stream<List<OrganizerDataModel>> getOrganizerHome() {
     return firestore
         .collection('Organizers')
@@ -27,6 +36,17 @@ class StreamServices {
               snapshot.docs
                   .map((doc) => OrganizerDataModel.fromFireStore(doc))
                   .toList(),
+        );
+  }
+
+  Stream<List<PostDataModel>> getOrganizerPost(uid) {
+    return firestore
+        .collection('post')
+        .where('uid', isEqualTo: uid)
+        .snapshots()
+        .map(
+          (snapshot) =>
+              snapshot.docs.map((doc) => PostDataModel.fromFirestore(doc)).toList(),
         );
   }
 
@@ -67,18 +87,19 @@ class StreamServices {
         );
   }
 
-  Stream<List<PaymentModel>> getReciept(String userId) {
-    return firestore
-        .collection('Users')
-        .doc(userId)
-        .collection('payments')
-        .snapshots()
-        .map((snapshot) {
-          return snapshot.docs
-              .map((doc) => PaymentModel.fromFirestore(doc))
-              .toList();
-        });
-  }
+Stream<List<PaymentModel>> getReciept(String userId) {
+  return firestore
+      .collection('Users')
+      .doc(userId)
+      .collection('payments')
+      .orderBy('timestamp', descending: true) // <--- ORDER BY TIMESTAMP
+      .snapshots()
+      .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => PaymentModel.fromFirestore(doc))
+            .toList();
+      });
+}
 
   Stream<List<PostDataModel>> getFilteredPosts(
     String searchQuery, {

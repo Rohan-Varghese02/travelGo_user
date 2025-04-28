@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
@@ -99,6 +100,7 @@ class ChooseTicketFooter extends StatelessWidget {
                         country: country,
                         venue: venue,
                         date: date,
+                        timestamp: Timestamp.now(),
                       );
                       context.read<PostBloc>().add(
                         PaymentIntiate(

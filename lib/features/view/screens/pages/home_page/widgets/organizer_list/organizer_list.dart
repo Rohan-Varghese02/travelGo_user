@@ -3,6 +3,7 @@ import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/core/services/stream_services.dart';
 import 'package:travelgo_user/features/view/screens/pages/home_page/widgets/organizer_list/organizer_tile.dart';
 import 'package:travelgo_user/features/view/screens/pages/home_page/widgets/organizer_list_page/organizer_list_page.dart';
+import 'package:travelgo_user/features/view/screens/pages/organizer_detail_page/organizer_detail_page.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class OrganizerList extends StatelessWidget {
@@ -52,7 +53,19 @@ class OrganizerList extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: organizer!.length,
                 itemBuilder: (context, index) {
-                  return OrganizerTile(organizerData: organizer[index]);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder:
+                              (context) => OrganizerDetailPage(
+                                organizerData: organizer[index],
+                              ),
+                        ),
+                      );
+                    },
+                    child: OrganizerTile(organizerData: organizer[index]),
+                  );
                 },
                 separatorBuilder: (context, index) => SizedBox(width: 10),
               ),

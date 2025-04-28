@@ -20,32 +20,37 @@ class PaymentList extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image(
-                image: NetworkImage(receipt.postImage),
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                StyleText(
-                  text: receipt.postName,
-                  size: 19,
-                  fontWeight: FontWeight.w700,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image(
+                    image: NetworkImage(receipt.postImage),
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                StyleText(
-                  text: 'Ticket Type : ${receipt.ticketType}',
-                  size: 15,
-                  fontWeight: FontWeight.w400,
-                ),
-                StyleText(
-                  text: 'Number of tickets : ${receipt.totalTickets}',
-                  size: 14,
-                  fontWeight: FontWeight.w400,
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    StyleText(
+                      text: receipt.postName,
+                      size: 19,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    StyleText(
+                      text: 'Ticket Type : ${receipt.ticketType}',
+                      size: 15,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    StyleText(
+                      text: 'Number of tickets : ${receipt.totalTickets}',
+                      size: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ],
                 ),
               ],
             ),

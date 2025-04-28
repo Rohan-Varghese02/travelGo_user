@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,6 +14,8 @@ class PaymentModel {
   final String country;
   final String venue;
   final String date;
+  final Timestamp timestamp; // <--- ADD THIS
+
   PaymentModel({
     required this.userUid,
     required this.organizerUid,
@@ -27,6 +28,7 @@ class PaymentModel {
     required this.country,
     required this.venue,
     required this.date,
+    required this.timestamp, // <--- ADD THIS
   });
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -41,6 +43,7 @@ class PaymentModel {
       'country': country,
       'venue': venue,
       'date': date,
+      'timestamp': timestamp, // <--- ADD THIS
     };
   }
 
@@ -58,6 +61,7 @@ class PaymentModel {
       country: data['country'] ?? '',
       venue: data['venue'] ?? '',
       date: data['date'] ?? '',
+      timestamp: data['timestamp'] ?? Timestamp.now(), // <--- ADD THIS
     );
   }
 
@@ -73,6 +77,7 @@ class PaymentModel {
     String? country,
     String? venue,
     String? date,
+    Timestamp? timestamp,
   }) {
     return PaymentModel(
       userUid: userUid ?? this.userUid,
@@ -86,6 +91,7 @@ class PaymentModel {
       country: country ?? this.country,
       venue: venue ?? this.venue,
       date: date ?? this.date,
+      timestamp: timestamp ?? this.timestamp,
     );
   }
 
@@ -102,48 +108,7 @@ class PaymentModel {
       country: map['country'] as String,
       venue: map['venue'] as String,
       date: map['date'] as String,
+      timestamp: map['timestamp'] as Timestamp, // <--- ADD THIS
     );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory PaymentModel.fromJson(String source) =>
-      PaymentModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'PaymentModel(userUid: $userUid, organizerUid: $organizerUid, totalTickets: $totalTickets, totalPrice: $totalPrice, ticketType: $ticketType, postName: $postName, postID: $postID, postImage: $postImage, country: $country, venue: $venue, date: $date)';
-  }
-
-  @override
-  bool operator ==(covariant PaymentModel other) {
-    if (identical(this, other)) return true;
-
-    return other.userUid == userUid &&
-        other.organizerUid == organizerUid &&
-        other.totalTickets == totalTickets &&
-        other.totalPrice == totalPrice &&
-        other.ticketType == ticketType &&
-        other.postName == postName &&
-        other.postID == postID &&
-        other.postImage == postImage &&
-        other.country == country &&
-        other.venue == venue &&
-        other.date == date;
-  }
-
-  @override
-  int get hashCode {
-    return userUid.hashCode ^
-        organizerUid.hashCode ^
-        totalTickets.hashCode ^
-        totalPrice.hashCode ^
-        ticketType.hashCode ^
-        postName.hashCode ^
-        postID.hashCode ^
-        postImage.hashCode ^
-        country.hashCode ^
-        venue.hashCode ^
-        date.hashCode;
   }
 }

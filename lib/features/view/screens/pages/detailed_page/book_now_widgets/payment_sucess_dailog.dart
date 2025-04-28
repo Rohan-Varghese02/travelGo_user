@@ -39,7 +39,6 @@ paymentSuccessDaiolg(BuildContext context) {
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
-                  Navigator.of(context).pop();
                 },
                 child: StyleText(text: 'Go Back to Home Page', color: white),
               ),
