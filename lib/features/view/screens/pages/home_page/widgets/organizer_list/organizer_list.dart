@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/core/services/stream_services.dart';
 import 'package:travelgo_user/features/view/screens/pages/home_page/widgets/organizer_list/organizer_tile.dart';
+import 'package:travelgo_user/features/view/screens/pages/home_page/widgets/organizer_list_page/organizer_list_page.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class OrganizerList extends StatelessWidget {
@@ -12,11 +13,30 @@ class OrganizerList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StyleText(
-          text: 'Organizer List',
-          fontWeight: FontWeight.bold,
-          size: 24,
-          color: innerTheme,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            StyleText(
+              text: 'Organizer List',
+              fontWeight: FontWeight.bold,
+              size: 24,
+              color: innerTheme,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => OrganizerListPage()),
+                );
+              },
+              child: StyleText(
+                text: 'View more',
+                fontWeight: FontWeight.w300,
+                color: themeColor,
+                size: 13,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
         ),
         StreamBuilder(
           stream: StreamServices().getOrganizerHome(),

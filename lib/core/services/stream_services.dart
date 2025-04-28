@@ -30,6 +30,19 @@ class StreamServices {
         );
   }
 
+  Stream<List<PostDataModel>> getPostCategoryCountry(String country) {
+    return firestore
+        .collection('post')
+        .where('country', isEqualTo: country)
+        .snapshots()
+        .map(
+          (snaphot) =>
+              snaphot.docs
+                  .map((doc) => PostDataModel.fromFirestore(doc))
+                  .toList(),
+        );
+  }
+
   Stream<List<Category>> categoryStream() {
     return firestore
         .collection('categories')
