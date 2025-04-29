@@ -46,7 +46,9 @@ class StreamServices {
         .snapshots()
         .map(
           (snapshot) =>
-              snapshot.docs.map((doc) => PostDataModel.fromFirestore(doc)).toList(),
+              snapshot.docs
+                  .map((doc) => PostDataModel.fromFirestore(doc))
+                  .toList(),
         );
   }
 
@@ -68,10 +70,13 @@ class StreamServices {
         .collection('categories')
         .where('type', isEqualTo: 'event')
         .snapshots()
-        .map(
-          (snapshot) =>
-              snapshot.docs.map((doc) => Category.fromFirestore(doc)).toList(),
-        );
+        .map((snapshot) {
+          List<Category> categories =
+              snapshot.docs.map((doc) => Category.fromFirestore(doc)).toList();
+          categories.sort((a, b) => a.timeStamp.compareTo(b.timeStamp));
+
+          return categories;
+        });
   }
 
   Stream<List<PostDataModel>> getPostCategory(String category) {
@@ -86,20 +91,32 @@ class StreamServices {
                   .toList(),
         );
   }
+  Stream<List<PostDataModel>> featuredStream() {
+    return firestore
+        .collection('post')
+        .where('isFeatured', isEqualTo: true)
+        .snapshots()
+        .map(
+          (snaphot) =>
+              snaphot.docs
+                  .map((doc) => PostDataModel.fromFirestore(doc))
+                  .toList(),
+        );
+  }
 
-Stream<List<PaymentModel>> getReciept(String userId) {
-  return firestore
-      .collection('Users')
-      .doc(userId)
-      .collection('payments')
-      .orderBy('timestamp', descending: true) // <--- ORDER BY TIMESTAMP
-      .snapshots()
-      .map((snapshot) {
-        return snapshot.docs
-            .map((doc) => PaymentModel.fromFirestore(doc))
-            .toList();
-      });
-}
+  Stream<List<PaymentModel>> getReciept(String userId) {
+    return firestore
+        .collection('Users')
+        .doc(userId)
+        .collection('payments')
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs
+              .map((doc) => PaymentModel.fromFirestore(doc))
+              .toList();
+        });
+  }
 
   Stream<List<PostDataModel>> getFilteredPosts(
     String searchQuery, {

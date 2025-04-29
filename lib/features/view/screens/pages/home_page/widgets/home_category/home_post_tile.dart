@@ -20,7 +20,6 @@ class HomePostTile extends StatelessWidget {
   Widget build(BuildContext context) {
     String originalDate = post.registrationDeadline;
     String formattedDate = formatDate(originalDate);
-    print(formattedDate);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -34,14 +33,14 @@ class HomePostTile extends StatelessWidget {
         child: SizedBox(
           child: Column(
             children: [
-              SizedBox(
+              Container(
                 width: 150,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
 
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(15),
                       child: Image(
                         image: NetworkImage(post.imageUrl),
                         width: 150,
@@ -50,18 +49,35 @@ class HomePostTile extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
-                    StyleText(text: post.name, fontWeight: FontWeight.bold),
-                    StyleText(text: 'Date: $formattedDate', size: 13),
-                    StyleText(text: 'Venue: ${post.venue}', size: 13),
+                    StyleText(
+                      text: post.name,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    StyleText(
+                      text: 'Date: $formattedDate',
+                      size: 13,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    StyleText(
+                      text: 'Venue: ${post.venue}',
+                      size: 13,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                     StyleText(
                       text:
                           'Price: ₹${post.tickets.entries.first.value['price']}',
                       size: 13,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     Container(
                       height: 40,
                       decoration: BoxDecoration(
-                        color: lightTheme,
+                        color: innerTheme,
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(15),
                           bottomRight: Radius.circular(15),

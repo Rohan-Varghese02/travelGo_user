@@ -21,7 +21,7 @@ class OrganizerList extends StatelessWidget {
               text: 'Organizer List',
               fontWeight: FontWeight.bold,
               size: 24,
-              color: innerTheme,
+              color: black,
             ),
             GestureDetector(
               onTap: () {

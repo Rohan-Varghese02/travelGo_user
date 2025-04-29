@@ -5,6 +5,7 @@ import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/payment_and_payouts/widgets/payment_list.dart';
 import 'package:travelgo_user/features/view/widgets/custom_app_bar.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class PaymentPage extends StatelessWidget {
   final UserDataModel userData;
@@ -24,6 +25,10 @@ class PaymentPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
+          }
+
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: StyleText(text: 'No payment made'));
           }
 
           if (snapshot.hasError) {

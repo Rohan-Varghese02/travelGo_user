@@ -3,9 +3,10 @@ import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class LongButton extends StatelessWidget {
+  final Color? color;
   final String text;
   final void Function() onPressed;
-  const LongButton({super.key, required this.text, required this.onPressed});
+  const LongButton({super.key, required this.text, required this.onPressed, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class LongButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
       onPressed: onPressed,
-      child: StyleText(text: text, size: 16,fontWeight: FontWeight.w500,),
+      child: StyleText(text: text, size: 16, fontWeight: FontWeight.w500, color: color,),
     );
   }
 }

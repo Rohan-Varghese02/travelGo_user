@@ -51,14 +51,15 @@ class CountryList extends StatelessWidget {
                   width: 100,
                   height: 30,
                   decoration: BoxDecoration(
-                    color: innerTheme,
-                    border: Border.all(color: themeColor),
+                    // border: Border.all(width: 0.5, color: themeColor),
                     borderRadius: BorderRadius.circular(17),
+                    color: lightOpacityTheme,
                   ),
                   child: Center(
                     child: StyleText(
                       text: categories[index].name,
-                      color: white,
+                      color: themeColor,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

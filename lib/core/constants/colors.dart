@@ -4,6 +4,7 @@ final themeColor = Color(0xFF0E5A9C);
 final darkthemeColor = Color(0xff009cff);
 final innerTheme = Color(0xFF1565C0);
 final lightTheme = Color(0xFF90CAF9);
+final lightOpacityTheme = Color.fromARGB(149, 144, 202, 249);
 
 final grey50 = Color(0xff808080);
 final black = Color(0xff1a1a1a);

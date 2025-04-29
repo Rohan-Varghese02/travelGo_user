@@ -46,11 +46,15 @@ class DetailTile extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                     size: 15,
                     color: white,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   )
                   : StyleText(
                     text: '$subtitle, $extra',
                     size: 15,
                     color: white,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
             ],
           ),

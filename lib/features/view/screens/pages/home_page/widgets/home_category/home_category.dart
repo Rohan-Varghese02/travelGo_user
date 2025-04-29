@@ -30,7 +30,7 @@ class HomeCategory extends StatelessWidget {
                   text: category[index].name,
                   fontWeight: FontWeight.bold,
                   size: 24,
-                  color: innerTheme,
+                  color: black,
                 ),
                 SizedBox(height: 10),
                 CategoryTile(

@@ -5,6 +5,7 @@ import 'package:travelgo_user/features/view/screens/pages/organizer_detail_page/
 import 'package:travelgo_user/features/view/screens/pages/organizer_detail_page/widgets/organizer_live_update.dart';
 import 'package:travelgo_user/features/view/screens/pages/organizer_detail_page/widgets/organizer_post_list.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text.dart';
+import 'package:travelgo_user/features/view/widgets/long_button.dart';
 import 'package:travelgo_user/features/view/widgets/profile_avatar.dart';
 
 class OrganizerDetailPage extends StatelessWidget {
@@ -32,6 +33,11 @@ class OrganizerDetailPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: LongButton(
+        text: 'Follow',
+        onPressed: () {},
+        color: white,
       ),
     );
   }
