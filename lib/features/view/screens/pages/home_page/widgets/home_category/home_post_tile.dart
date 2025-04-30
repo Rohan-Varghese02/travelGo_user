@@ -5,6 +5,7 @@ import 'package:travelgo_user/data/models/post_data_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/detailed_page.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
+import 'package:travelgo_user/features/view/widgets/text_fw.dart';
 
 class HomePostTile extends StatelessWidget {
   final UserDataModel userData;
@@ -55,25 +56,14 @@ class HomePostTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    StyleText(
-                      text: 'Date: $formattedDate',
-                      size: 13,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                    TextFw(firstword: 'Date: ', secondWord: formattedDate),
+                    TextFw(firstword: 'Venue: ', secondWord: post.venue),
+                    TextFw(
+                      firstword: 'Price: ',
+                      secondWord:
+                          '₹${post.tickets.entries.first.value['price']}',
                     ),
-                    StyleText(
-                      text: 'Venue: ${post.venue}',
-                      size: 13,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                    StyleText(
-                      text:
-                          'Price: ₹${post.tickets.entries.first.value['price']}',
-                      size: 13,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
+
                     Container(
                       height: 40,
                       decoration: BoxDecoration(

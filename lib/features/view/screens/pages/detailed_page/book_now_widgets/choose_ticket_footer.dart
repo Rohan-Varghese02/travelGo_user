@@ -44,31 +44,35 @@ class ChooseTicketFooter extends StatelessWidget {
             StyleText(text: 'Number of seats', size: 18),
             Row(
               children: [
-                gestureControl(
-                  icon: Icon(Icons.remove),
-                  color: grey20,
-                  onTap: () {
-                    if (ticketCount > 0) {
-                      context.read<PostBloc>().add(
-                        DecrementTicket(ticketCount: ticketCount),
-                      );
-                    }
-                  },
-                ),
+                ticketCount == 0
+                    ? SizedBox(width: 10)
+                    : gestureControl(
+                      icon: Icon(Icons.remove),
+                      color: grey20,
+                      onTap: () {
+                        if (ticketCount > 0) {
+                          context.read<PostBloc>().add(
+                            DecrementTicket(ticketCount: ticketCount),
+                          );
+                        }
+                      },
+                    ),
                 SizedBox(width: 10),
                 Text(ticketCount.toString()),
-                SizedBox(width: 10),
-                gestureControl(
-                  icon: Icon(Icons.add, color: white),
-                  color: themeColor,
-                  onTap: () {
-                    if (ticketCount < count) {
-                      context.read<PostBloc>().add(
-                        IncrementTicket(ticketCount: ticketCount),
-                      );
-                    }
-                  },
-                ),
+                SizedBox(width: 20),
+                ticketCount == count
+                    ? SizedBox(width: 10)
+                    : gestureControl(
+                      icon: Icon(Icons.add, color: white),
+                      color: ticketCount == count ? grey20 : themeColor,
+                      onTap: () {
+                        if (ticketCount < count) {
+                          context.read<PostBloc>().add(
+                            IncrementTicket(ticketCount: ticketCount),
+                          );
+                        }
+                      },
+                    ),
               ],
             ),
           ],

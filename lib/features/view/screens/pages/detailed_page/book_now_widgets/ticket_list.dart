@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
+import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/inactive_ticket_tile.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/ticket_tile.dart';
 
 class TicketList extends StatefulWidget {
@@ -39,12 +40,20 @@ class _TicketListState extends State<TicketList> {
                         ),
                       );
                     },
-                    child: TicketTile(
-                      ticketType: ticketType,
-                      price: price,
-                      count: count,
-                      isSelected: isSelected,
-                    ),
+                    child:
+                        count == 0
+                            ? InactiveTicketTile(
+                              ticketType: ticketType,
+                              price: price,
+                              count: count,
+                              isSelected: isSelected,
+                            )
+                            : TicketTile(
+                              ticketType: ticketType,
+                              price: price,
+                              count: count,
+                              isSelected: isSelected,
+                            ),
                   );
                 }).toList(),
           ),

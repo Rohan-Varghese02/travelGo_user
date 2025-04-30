@@ -6,6 +6,7 @@ import 'package:travelgo_user/core/services/stream_services.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 
 import 'package:travelgo_user/features/view/screens/pages/home_page/widgets/home_category/home_post_tile.dart';
+import 'package:travelgo_user/features/view/screens/pages/home_page/widgets/view_more.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class FeaturedList extends StatelessWidget {
@@ -18,11 +19,36 @@ class FeaturedList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        StyleText(
-          text: 'Featured',
-          fontWeight: FontWeight.bold,
-          size: 24,
-          color: black,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            StyleText(
+              text: 'Featured',
+              fontWeight: FontWeight.bold,
+              size: 24,
+              color: black,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder:
+                        (context) => ViewMore(
+                          stream: StreamServices().featuredStream(),
+                          headline: 'Featured', userdata: userdata,
+                        ),
+                  ),
+                );
+              },
+              child: StyleText(
+                text: 'View more',
+                fontWeight: FontWeight.w300,
+                color: themeColor,
+                size: 13,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ],
         ),
         StreamBuilder(
           stream: StreamServices().featuredStream(),

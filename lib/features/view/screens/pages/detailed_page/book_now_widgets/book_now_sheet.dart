@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
@@ -84,7 +83,7 @@ class _BookNowSheetState extends State<BookNowSheet> {
               ),
 
               SizedBox(height: 24),
-              selectedTicketType != null && count != null
+              selectedTicketType != null && count != null && count != 0
                   ? ChooseTicketFooter(
                     postImage: widget.post.imageUrl,
                     organizerUid: widget.organizerUid,

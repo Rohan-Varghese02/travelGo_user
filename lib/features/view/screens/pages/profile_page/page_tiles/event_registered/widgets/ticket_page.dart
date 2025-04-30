@@ -63,7 +63,7 @@ class TicketPage extends StatelessWidget {
                         country: receipt.country,
                         date: receipt.date,
                         ticketType: receipt.ticketType,
-                        numberOfTickets: receipt.totalTickets,
+                        numberOfTickets: receipt.totalTickets, price: receipt.totalPrice,
                       ),
                       SizedBox(height: 25),
                       Divider(color: themeColor),
