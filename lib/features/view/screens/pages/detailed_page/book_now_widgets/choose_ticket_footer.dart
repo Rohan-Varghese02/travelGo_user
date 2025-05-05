@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
+import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ChooseTicketFooter extends StatelessWidget {
+  final UserDataModel userData;
   final String postName;
   final String postID;
   final String organizerUid;
@@ -31,7 +33,7 @@ class ChooseTicketFooter extends StatelessWidget {
     required this.postImage,
     required this.country,
     required this.venue,
-    required this.date,
+    required this.date, required this.userData,
   });
 
   @override
@@ -108,6 +110,7 @@ class ChooseTicketFooter extends StatelessWidget {
                       );
                       context.read<PostBloc>().add(
                         PaymentIntiate(
+                          userData: userData,
                           totalPrice: totalPrice,
                           paymentData: payment,
                         ),

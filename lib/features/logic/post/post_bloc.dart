@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:travelgo_user/core/services/firestore_services.dart';
 import 'package:travelgo_user/core/services/stripe_services.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
+import 'package:travelgo_user/data/models/user_data.dart';
 
 part 'post_event.dart';
 part 'post_state.dart';
@@ -77,10 +79,28 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     );
     if (paymentID != null) {
       await FirestoreService().paymentRecipetinFiresttore(event.paymentData);
-      await updateTicketCount(
+      await FirestoreService().updateTicketCount(
         postId: event.paymentData.postID,
         ticketType: event.paymentData.ticketType,
         quantityToBuy: event.paymentData.totalTickets,
+      );
+      await FirebaseFirestore.instance
+          .collection('post')
+          .doc(event.paymentData.postID)
+          .collection('users')
+          .doc(event.paymentData.userUid)
+          .set({
+            'userUID': event.paymentData.userUid,
+            'userImage': event.userData.imageUrl,
+            'userEmail': event.userData.email,
+            'userPhone': event.userData.phoneNumber,
+          });
+      await FirestoreService().updateRevenueAfterPurchase(
+        organizerUid: event.paymentData.organizerUid,
+        postId: event.paymentData.postID,
+        ticketType: event.paymentData.ticketType,
+        quantity: event.paymentData.totalTickets,
+        totalPrice: event.paymentData.totalPrice,
       );
       emit(PaymentSuccess(paymentID: paymentID));
     } else {

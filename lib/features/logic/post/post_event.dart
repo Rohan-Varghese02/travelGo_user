@@ -42,7 +42,12 @@ class DecrementTicket extends PostEvent {
 }
 
 class PaymentIntiate extends PostEvent {
+  final UserDataModel userData;
   final int totalPrice;
   final PaymentModel paymentData;
-  PaymentIntiate({required this.totalPrice, required this.paymentData});
+  PaymentIntiate({
+    required this.userData,
+    required this.totalPrice,
+    required this.paymentData,
+  });
 }

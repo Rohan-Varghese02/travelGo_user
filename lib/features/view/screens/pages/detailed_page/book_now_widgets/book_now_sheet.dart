@@ -85,6 +85,7 @@ class _BookNowSheetState extends State<BookNowSheet> {
               SizedBox(height: 24),
               selectedTicketType != null && count != null && count != 0
                   ? ChooseTicketFooter(
+                    userData: widget.userData,
                     postImage: widget.post.imageUrl,
                     organizerUid: widget.organizerUid,
                     userUid: widget.userData.uid,
