@@ -6,6 +6,7 @@ class StyleText extends StatelessWidget {
   final TextDecoration? decoration;
   final String text;
   final Color? color;
+  final bool? softWrap;
   final double? size;
   final FontWeight? fontWeight;
   final TextOverflow? overflow;
@@ -16,7 +17,7 @@ class StyleText extends StatelessWidget {
     this.color,
     this.size,
     this.fontWeight,
-    this.decoration, this.overflow, this.maxLines,
+    this.decoration, this.overflow, this.maxLines, this.softWrap,
   });
 
   @override
@@ -24,6 +25,7 @@ class StyleText extends StatelessWidget {
     return Text(
       text,
       overflow: overflow,
+      softWrap: softWrap,
       maxLines: maxLines,
       style: GoogleFonts.poppins(
         color: color ?? black,

@@ -22,6 +22,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<IncrementTicket>(incrementTicket);
     on<DecrementTicket>(decrementTicket);
     on<PaymentIntiate>(paymentIntiate);
+    on<CouponStatusCheck>(couponStatusCheck);
   }
 
   FutureOr<void> fetchOrganizerDetails(
@@ -70,41 +71,97 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     emit(DecrementedTicket(ticketCount: count));
   }
 
-  FutureOr<void> paymentIntiate(
-    PaymentIntiate event,
+FutureOr<void> paymentIntiate(
+  PaymentIntiate event,
+  Emitter<PostState> emit,
+) async {
+  String? paymentID = await StripeServices.instance.makePayment(
+    event.totalPrice,
+  );
+
+  if (paymentID != null) {
+    await FirestoreService().paymentRecipetinFiresttore(event.paymentData);
+
+    await FirestoreService().updateTicketCount(
+      postId: event.paymentData.postID,
+      ticketType: event.paymentData.ticketType,
+      quantityToBuy: event.paymentData.totalTickets,
+    );
+
+    await FirebaseFirestore.instance
+        .collection('post')
+        .doc(event.paymentData.postID)
+        .collection('users')
+        .doc(event.paymentData.userUid)
+        .set({
+          'userUID': event.paymentData.userUid,
+          'userImage': event.userData.imageUrl,
+          'userEmail': event.userData.email,
+          'userPhone': event.userData.phoneNumber,
+          'userName': event.userData.name,
+          'tickets': {
+            event.paymentData.ticketType: FieldValue.increment(
+              event.paymentData.totalTickets,
+            ),
+          },
+        }, SetOptions(merge: true));
+
+    await FirestoreService().updateRevenueAfterPurchase(
+      organizerUid: event.paymentData.organizerUid,
+      postId: event.paymentData.postID,
+      ticketType: event.paymentData.ticketType,
+      quantity: event.paymentData.totalTickets,
+      totalPrice: event.paymentData.totalPrice,
+    );
+    if (event.couponCode != null && event.couponCode!.isNotEmpty) {
+      final couponQuery = await FirebaseFirestore.instance
+          .collection('Coupons')
+          .where('codeName', isEqualTo: event.couponCode)
+          .limit(1)
+          .get();
+
+      if (couponQuery.docs.isNotEmpty) {
+        final couponDoc = couponQuery.docs.first.reference;
+        await couponDoc.update({
+          'codeRedeem': FieldValue.increment(-event.paymentData.totalTickets),
+        });
+      }
+    }
+
+    emit(PaymentSuccess(paymentID: paymentID));
+  } else {
+    emit(PaymentFailed());
+  }
+}
+
+
+  FutureOr<void> couponStatusCheck(
+    CouponStatusCheck event,
     Emitter<PostState> emit,
   ) async {
-    String? paymentID = await StripeServices.instance.makePayment(
-      event.totalPrice,
-    );
-    if (paymentID != null) {
-      await FirestoreService().paymentRecipetinFiresttore(event.paymentData);
-      await FirestoreService().updateTicketCount(
-        postId: event.paymentData.postID,
-        ticketType: event.paymentData.ticketType,
-        quantityToBuy: event.paymentData.totalTickets,
-      );
-      await FirebaseFirestore.instance
-          .collection('post')
-          .doc(event.paymentData.postID)
-          .collection('users')
-          .doc(event.paymentData.userUid)
-          .set({
-            'userUID': event.paymentData.userUid,
-            'userImage': event.userData.imageUrl,
-            'userEmail': event.userData.email,
-            'userPhone': event.userData.phoneNumber,
-          });
-      await FirestoreService().updateRevenueAfterPurchase(
-        organizerUid: event.paymentData.organizerUid,
-        postId: event.paymentData.postID,
-        ticketType: event.paymentData.ticketType,
-        quantity: event.paymentData.totalTickets,
-        totalPrice: event.paymentData.totalPrice,
-      );
-      emit(PaymentSuccess(paymentID: paymentID));
-    } else {
-      emit(PaymentFailed());
+    try {
+      final querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('Coupons')
+              .where('codeName', isEqualTo: event.couponCode)
+              .limit(1)
+              .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        final data = querySnapshot.docs.first.data();
+        final isActive = data['isActive'] ?? false;
+
+        if (isActive) {
+          final int discount = data['codeDiscount'] ?? 0;
+          emit(CouponValid(discount: discount)); // custom state you'll define
+        } else {
+          emit(CouponInvalid(message: 'Coupon is inactive'));
+        }
+      } else {
+        emit(CouponInvalid(message: 'Invalid coupon code'));
+      }
+    } catch (e) {
+      emit(CouponInvalid(message: 'Error: ${e.toString()}'));
     }
   }
 }

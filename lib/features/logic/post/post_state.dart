@@ -58,3 +58,15 @@ class PaymentSuccess extends PostState {
 }
 
 class PaymentFailed extends PostState {}
+
+class CouponValid extends PostState {
+  final int discount;
+
+  CouponValid({required this.discount});
+}
+
+class CouponInvalid extends PostState {
+  final String message;
+
+  CouponInvalid({required this.message});
+}

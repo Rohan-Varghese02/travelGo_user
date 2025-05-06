@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:travelgo_user/data/models/blog_data.dart';
 import 'package:travelgo_user/data/models/category_model.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
@@ -91,6 +92,7 @@ class StreamServices {
                   .toList(),
         );
   }
+
   Stream<List<PostDataModel>> featuredStream() {
     return firestore
         .collection('post')
@@ -151,6 +153,12 @@ class StreamServices {
 
         return matchesSearch && matchesCategory && matchesCountry;
       }).toList();
+    });
+  }
+
+  Stream<List<BlogData>> getBlog() {
+    return firestore.collection('Blogs').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => BlogData.fromMap(doc.data())).toList();
     });
   }
 }

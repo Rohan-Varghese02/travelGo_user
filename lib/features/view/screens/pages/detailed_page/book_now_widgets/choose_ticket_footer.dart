@@ -1,4 +1,4 @@
-import 'dart:developer';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +7,10 @@ import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
+import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/apply_coupon.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
-class ChooseTicketFooter extends StatelessWidget {
+class ChooseTicketFooter extends StatefulWidget {
   final UserDataModel userData;
   final String postName;
   final String postID;
@@ -33,112 +34,144 @@ class ChooseTicketFooter extends StatelessWidget {
     required this.postImage,
     required this.country,
     required this.venue,
-    required this.date, required this.userData,
+    required this.date,
+    required this.userData,
   });
 
   @override
+  State<ChooseTicketFooter> createState() => _ChooseTicketFooterState();
+}
+
+class _ChooseTicketFooterState extends State<ChooseTicketFooter> {
+  TextEditingController controller = TextEditingController();
+  final keystate = GlobalKey<FormState>();
+
+  int discount = 0;
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    int originalTotal = widget.price * widget.ticketCount;
+    int discountedTotal = originalTotal - ((originalTotal * discount) ~/ 100);
+
+    return BlocListener<PostBloc, PostState>(
+      listenWhen:
+          (previous, current) =>
+              current is CouponValid || current is CouponInvalid,
+      listener: (context, state) {
+        if (state is CouponValid) {
+          setState(() {
+            discount = state.discount;
+          });
+        } else if (state is CouponInvalid) {
+          setState(() {
+            discount = 0;
+          });
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text("Invalid coupon")));
+        }
+      },
+      child: Form(
+        key: keystate,
+        child: Column(
           children: [
-            StyleText(text: 'Number of seats', size: 18),
+            originalTotal > 0
+                ? ApplyCoupon(
+                  controller: controller,
+                  validator: validator,
+                  onTap: () {
+                    if (keystate.currentState!.validate()) {
+                      context.read<PostBloc>().add(
+                        CouponStatusCheck(
+                          totalPrice: originalTotal,
+                          couponCode: controller.text,
+                        ),
+                      );
+                    }
+                  },
+                )
+                : SizedBox(),
+            SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ticketCount == 0
-                    ? SizedBox(width: 10)
-                    : gestureControl(
-                      icon: Icon(Icons.remove),
-                      color: grey20,
-                      onTap: () {
-                        if (ticketCount > 0) {
+                StyleText(text: 'Number of seats', size: 18),
+                Row(
+                  children: [
+                    if (widget.ticketCount > 0)
+                      gestureControl(
+                        icon: Icon(Icons.remove),
+                        color: grey20,
+                        onTap: () {
                           context.read<PostBloc>().add(
-                            DecrementTicket(ticketCount: ticketCount),
+                            DecrementTicket(ticketCount: widget.ticketCount),
                           );
-                        }
-                      },
-                    ),
-                SizedBox(width: 10),
-                Text(ticketCount.toString()),
-                SizedBox(width: 20),
-                ticketCount == count
-                    ? SizedBox(width: 10)
-                    : gestureControl(
-                      icon: Icon(Icons.add, color: white),
-                      color: ticketCount == count ? grey20 : themeColor,
-                      onTap: () {
-                        if (ticketCount < count) {
+                        },
+                      ),
+                    SizedBox(width: 10),
+                    Text(widget.ticketCount.toString()),
+                    SizedBox(width: 20),
+                    if (widget.ticketCount < widget.count)
+                      gestureControl(
+                        icon: Icon(Icons.add, color: white),
+                        color: themeColor,
+                        onTap: () {
                           context.read<PostBloc>().add(
-                            IncrementTicket(ticketCount: ticketCount),
+                            IncrementTicket(ticketCount: widget.ticketCount),
                           );
-                        }
-                      },
-                    ),
+                        },
+                      ),
+                  ],
+                ),
               ],
+            ),
+            if (discount > 0) StyleText(text: 'Discount: $discount%'),
+            StyleText(text: 'Total Amount: ₹$discountedTotal', size: 18),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed:
+                  widget.selectedTicketType == null || widget.ticketCount == 0
+                      ? null
+                      : () {
+                        PaymentModel payment = PaymentModel(
+                          postImage: widget.postImage,
+                          userUid: widget.userUid,
+                          organizerUid: widget.organizerUid,
+                          totalTickets: widget.ticketCount,
+                          totalPrice: discountedTotal,
+                          ticketType: widget.selectedTicketType!,
+                          postName: widget.postName,
+                          postID: widget.postID,
+                          country: widget.country,
+                          venue: widget.venue,
+                          date: widget.date,
+                          timestamp: Timestamp.now(),
+                        );
+                        context.read<PostBloc>().add(
+                          PaymentIntiate(
+                            couponCode: controller.text,
+                            userData: widget.userData,
+                            totalPrice: discountedTotal,
+                            paymentData: payment,
+                          ),
+                        );
+                      },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: innerTheme,
+                padding: EdgeInsets.symmetric(horizontal: 130, vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: StyleText(
+                text: widget.count != 0 ? 'Continue' : 'Full Booked',
+                fontWeight: FontWeight.w500,
+                color: white,
+              ),
             ),
           ],
         ),
-        StyleText(text: 'Total Amount : ₹${price * ticketCount}', size: 18),
-        SizedBox(height: 20),
-        Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: themeColor),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: ElevatedButton(
-            onPressed:
-                selectedTicketType == null || ticketCount == 0
-                    ? null
-                    : () {
-                      log(userUid);
-                      log(organizerUid);
-                      int totalPrice = price * ticketCount;
-                      PaymentModel payment = PaymentModel(
-                        postImage: postImage,
-                        userUid: userUid,
-                        organizerUid: organizerUid,
-                        totalTickets: ticketCount,
-                        totalPrice: totalPrice,
-                        ticketType: selectedTicketType!,
-                        postName: postName,
-                        postID: postID,
-                        country: country,
-                        venue: venue,
-                        date: date,
-                        timestamp: Timestamp.now(),
-                      );
-                      context.read<PostBloc>().add(
-                        PaymentIntiate(
-                          userData: userData,
-                          totalPrice: totalPrice,
-                          paymentData: payment,
-                        ),
-                      );
-                    },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: innerTheme,
-              foregroundColor: black,
-              padding: EdgeInsets.symmetric(horizontal: 130, vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            child:
-                count != 0
-                    ? StyleText(
-                      text: 'Continue',
-                      fontWeight: FontWeight.w500,
-                      color: white,
-                    )
-                    : StyleText(
-                      text: 'Full Booked',
-                      fontWeight: FontWeight.w500,
-                      color: black,
-                    ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
@@ -158,4 +191,11 @@ Widget gestureControl({
       child: icon,
     ),
   );
+}
+
+String? validator(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Enter code';
+  }
+  return null;
 }

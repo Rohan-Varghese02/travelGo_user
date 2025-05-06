@@ -8,6 +8,7 @@ import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/payment_sucess_dailog.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/ticket_list.dart';
 
+
 class BookNowSheet extends StatefulWidget {
   final PostDataModel post;
 
@@ -82,7 +83,7 @@ class _BookNowSheetState extends State<BookNowSheet> {
                 selectedTicketType: selectedTicketType,
               ),
 
-              SizedBox(height: 24),
+              SizedBox(height: 10),
               selectedTicketType != null && count != null && count != 0
                   ? ChooseTicketFooter(
                     userData: widget.userData,

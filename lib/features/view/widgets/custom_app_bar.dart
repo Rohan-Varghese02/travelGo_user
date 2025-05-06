@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
