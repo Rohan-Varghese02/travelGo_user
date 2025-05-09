@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class ChatCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String picUrl;
   final String title;
   final List<Widget>? actions;
   final bool? center;
   final Color color;
   final bool showBack;
   final Color? backgroundColor;
-  const CustomAppBar({
+  const ChatCustomAppBar({
     super.key,
     required this.title,
     this.actions,
@@ -16,6 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.color,
     this.backgroundColor,
     this.center,
+    required this.picUrl,
   });
 
   @override
@@ -30,11 +32,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: Icon(Icons.arrow_back, color: color),
               )
               : SizedBox(),
-      title: StyleText(
-        text: title,
-        color: color,
-        size: 26,
-        fontWeight: FontWeight.w500,
+      title: Row(
+        children: [
+          CircleAvatar(backgroundImage: NetworkImage(picUrl)),
+          SizedBox(width: 10),
+          StyleText(
+            text: title,
+            color: color,
+            size: 20,
+            fontWeight: FontWeight.w500,
+          ),
+        ],
       ),
       automaticallyImplyLeading: showBack,
       actions: actions,

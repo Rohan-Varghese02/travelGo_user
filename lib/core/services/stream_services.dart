@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:travelgo_user/data/models/blog_data.dart';
 import 'package:travelgo_user/data/models/category_model.dart';
+import 'package:travelgo_user/data/models/chat_data.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
@@ -160,5 +161,18 @@ class StreamServices {
     return firestore.collection('Blogs').snapshots().map((snapshot) {
       return snapshot.docs.map((doc) => BlogData.fromMap(doc.data())).toList();
     });
+  }
+
+  Stream<List<ChatData>> getChat(String userId) {
+    return firestore
+        .collection('OrganizerChatrooms')
+        .doc(userId)
+        .collection('Organizers')
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs
+              .map((doc) => ChatData.fromFirestore(doc.data()))
+              .toList();
+        });
   }
 }

@@ -54,9 +54,11 @@ class _DetailedPageState extends State<DetailedPage> {
             ),
             builder:
                 (context) => BookNowSheet(
+                  organizer: organizerData!,
                   tickets: widget.post.tickets,
                   userData: widget.userData,
-                  organizerUid: organizerData!.uid, post: widget.post,
+                  organizerUid: organizerData!.uid,
+                  post: widget.post,
                 ),
           );
         }

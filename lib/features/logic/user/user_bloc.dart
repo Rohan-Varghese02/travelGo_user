@@ -7,6 +7,7 @@ import 'package:meta/meta.dart';
 import 'package:travelgo_user/core/services/api_services.dart';
 import 'package:travelgo_user/core/services/auth/authservice.dart';
 import 'package:travelgo_user/core/services/firestore_services.dart';
+import 'package:travelgo_user/data/models/chat_data.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 
 part 'user_event.dart';
@@ -27,6 +28,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<PaymentAndPayoutClicked>(paymentAndPayoutClicked);
     // event Registered
     on<EventRegisterClicked>(eventRegisterClicked);
+    // Navigate to chat
+    on<Chat>(chat);
   }
 
   // Profile Page ---- Events
@@ -133,5 +136,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     Emitter<UserState> emit,
   ) {
     emit(NavigateEventRegistered(userData: event.userData));
+  }
+
+  FutureOr<void> chat(Chat event, Emitter<UserState> emit) {
+    emit(NavigateToChat(chat: event.chat, userData: event.userData));
   }
 }

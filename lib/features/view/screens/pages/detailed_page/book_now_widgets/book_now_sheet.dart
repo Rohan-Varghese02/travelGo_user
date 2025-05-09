@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
@@ -8,10 +9,9 @@ import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/payment_sucess_dailog.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/book_now_widgets/ticket_list.dart';
 
-
 class BookNowSheet extends StatefulWidget {
   final PostDataModel post;
-
+  final OrganizerDataModel organizer;
   final String organizerUid;
   final UserDataModel userData;
   final Map<String, Map<String, dynamic>> tickets;
@@ -21,7 +21,7 @@ class BookNowSheet extends StatefulWidget {
     required this.tickets,
     required this.userData,
     required this.organizerUid,
-    required this.post,
+    required this.post, required this.organizer,
   });
 
   @override
@@ -86,6 +86,7 @@ class _BookNowSheetState extends State<BookNowSheet> {
               SizedBox(height: 10),
               selectedTicketType != null && count != null && count != 0
                   ? ChooseTicketFooter(
+                    organizerData: widget.organizer,
                     userData: widget.userData,
                     postImage: widget.post.imageUrl,
                     organizerUid: widget.organizerUid,

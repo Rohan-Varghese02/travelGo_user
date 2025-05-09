@@ -109,4 +109,49 @@ class FirestoreService {
       });
     });
   }
+
+  Future<void> organizerMessage(
+    String organizerUid,
+    organizerImage,
+    organizerName,
+    userId,
+    lastMessage, Timestamp lastMessageTime
+  ) async {
+    return firestore
+        .collection('OrganizerChatrooms')
+        .doc(userId)
+        .collection('Organizers')
+        .doc(organizerUid)
+        .set({
+          'organizerUid': organizerUid,
+          'organizerImage': organizerImage,
+          'organizerName': organizerName,
+          'lastMessage':lastMessage,
+          'lastMessageTime':Timestamp.now(),
+                    'lastMessageBool':true,
+
+        });
+  }
+
+  Future<void> userMessage(
+    String userUid,
+    userImage,
+    userName,
+    organizerUid,
+    lastMessage, Timestamp lastMessageTime
+  ) async {
+    return firestore
+        .collection('UserChatrooms')
+        .doc(organizerUid)
+        .collection('Users')
+        .doc(userUid)
+        .set({
+          'userUid': userUid,
+          'userImage': userImage,
+          'userName': userName,
+           'lastMessage':lastMessage,
+          'lastMessageTime':Timestamp.now(),
+          'lastMessagebool':true,
+        });
+  }
 }

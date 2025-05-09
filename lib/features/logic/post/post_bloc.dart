@@ -71,69 +71,84 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     emit(DecrementedTicket(ticketCount: count));
   }
 
-FutureOr<void> paymentIntiate(
-  PaymentIntiate event,
-  Emitter<PostState> emit,
-) async {
-  String? paymentID = await StripeServices.instance.makePayment(
-    event.totalPrice,
-  );
-
-  if (paymentID != null) {
-    await FirestoreService().paymentRecipetinFiresttore(event.paymentData);
-
-    await FirestoreService().updateTicketCount(
-      postId: event.paymentData.postID,
-      ticketType: event.paymentData.ticketType,
-      quantityToBuy: event.paymentData.totalTickets,
+  FutureOr<void> paymentIntiate(
+    PaymentIntiate event,
+    Emitter<PostState> emit,
+  ) async {
+    String? paymentID = await StripeServices.instance.makePayment(
+      event.totalPrice,
     );
 
-    await FirebaseFirestore.instance
-        .collection('post')
-        .doc(event.paymentData.postID)
-        .collection('users')
-        .doc(event.paymentData.userUid)
-        .set({
-          'userUID': event.paymentData.userUid,
-          'userImage': event.userData.imageUrl,
-          'userEmail': event.userData.email,
-          'userPhone': event.userData.phoneNumber,
-          'userName': event.userData.name,
-          'tickets': {
-            event.paymentData.ticketType: FieldValue.increment(
-              event.paymentData.totalTickets,
-            ),
-          },
-        }, SetOptions(merge: true));
+    if (paymentID != null) {
+      await FirestoreService().paymentRecipetinFiresttore(event.paymentData);
 
-    await FirestoreService().updateRevenueAfterPurchase(
-      organizerUid: event.paymentData.organizerUid,
-      postId: event.paymentData.postID,
-      ticketType: event.paymentData.ticketType,
-      quantity: event.paymentData.totalTickets,
-      totalPrice: event.paymentData.totalPrice,
-    );
-    if (event.couponCode != null && event.couponCode!.isNotEmpty) {
-      final couponQuery = await FirebaseFirestore.instance
-          .collection('Coupons')
-          .where('codeName', isEqualTo: event.couponCode)
-          .limit(1)
-          .get();
+      await FirestoreService().updateTicketCount(
+        postId: event.paymentData.postID,
+        ticketType: event.paymentData.ticketType,
+        quantityToBuy: event.paymentData.totalTickets,
+      );
 
-      if (couponQuery.docs.isNotEmpty) {
-        final couponDoc = couponQuery.docs.first.reference;
-        await couponDoc.update({
-          'codeRedeem': FieldValue.increment(-event.paymentData.totalTickets),
-        });
+      await FirebaseFirestore.instance
+          .collection('post')
+          .doc(event.paymentData.postID)
+          .collection('users')
+          .doc(event.paymentData.userUid)
+          .set({
+            'userUID': event.paymentData.userUid,
+            'userImage': event.userData.imageUrl,
+            'userEmail': event.userData.email,
+            'userPhone': event.userData.phoneNumber,
+            'userName': event.userData.name,
+            'tickets': {
+              event.paymentData.ticketType: FieldValue.increment(
+                event.paymentData.totalTickets,
+              ),
+            },
+          }, SetOptions(merge: true));
+      await FirestoreService().organizerMessage(
+        event.organizerData.uid,
+        event.organizerData.imageUrl,
+        event.organizerData.name,
+        event.userData.uid,
+        'Tap here to message',
+        Timestamp.now(),
+      );
+      await FirestoreService().userMessage(
+        event.userData.uid,
+        event.userData.imageUrl,
+        event.userData.name,
+        event.organizerData.uid,
+        'Tap here to message',
+        Timestamp.now(),
+      );
+      await FirestoreService().updateRevenueAfterPurchase(
+        organizerUid: event.paymentData.organizerUid,
+        postId: event.paymentData.postID,
+        ticketType: event.paymentData.ticketType,
+        quantity: event.paymentData.totalTickets,
+        totalPrice: event.paymentData.totalPrice,
+      );
+      if (event.couponCode != null && event.couponCode!.isNotEmpty) {
+        final couponQuery =
+            await FirebaseFirestore.instance
+                .collection('Coupons')
+                .where('codeName', isEqualTo: event.couponCode)
+                .limit(1)
+                .get();
+
+        if (couponQuery.docs.isNotEmpty) {
+          final couponDoc = couponQuery.docs.first.reference;
+          await couponDoc.update({
+            'codeRedeem': FieldValue.increment(-event.paymentData.totalTickets),
+          });
+        }
       }
+
+      emit(PaymentSuccess(paymentID: paymentID));
+    } else {
+      emit(PaymentFailed());
     }
-
-    emit(PaymentSuccess(paymentID: paymentID));
-  } else {
-    emit(PaymentFailed());
   }
-}
-
 
   FutureOr<void> couponStatusCheck(
     CouponStatusCheck event,
@@ -150,13 +165,27 @@ FutureOr<void> paymentIntiate(
       if (querySnapshot.docs.isNotEmpty) {
         final data = querySnapshot.docs.first.data();
         final isActive = data['isActive'] ?? false;
+        final codeRedeem = data['codeRedeem'] ?? 0;
+        final couponPostName = data['postName'] ?? '';
+        final currentPostName = event.postName;
 
-        if (isActive) {
-          final int discount = data['codeDiscount'] ?? 0;
-          emit(CouponValid(discount: discount)); // custom state you'll define
-        } else {
-          emit(CouponInvalid(message: 'Coupon is inactive'));
+        if (couponPostName != currentPostName) {
+          emit(CouponInvalid(message: 'This coupon is not for this post'));
+          return;
         }
+
+        if (!isActive) {
+          emit(CouponInvalid(message: 'Coupon is inactive'));
+          return;
+        }
+
+        if (codeRedeem == 0) {
+          emit(CouponInvalid(message: 'This coupon has already been used up'));
+          return;
+        }
+
+        final int discount = data['codeDiscount'] ?? 0;
+        emit(CouponValid(discount: discount)); // Custom state
       } else {
         emit(CouponInvalid(message: 'Invalid coupon code'));
       }

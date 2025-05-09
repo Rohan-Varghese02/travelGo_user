@@ -1,9 +1,10 @@
-
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
+import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/payment_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/post/post_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class ChooseTicketFooter extends StatefulWidget {
+  final OrganizerDataModel organizerData;
   final UserDataModel userData;
   final String postName;
   final String postID;
@@ -36,6 +38,7 @@ class ChooseTicketFooter extends StatefulWidget {
     required this.venue,
     required this.date,
     required this.userData,
+    required this.organizerData,
   });
 
   @override
@@ -63,6 +66,7 @@ class _ChooseTicketFooterState extends State<ChooseTicketFooter> {
             discount = state.discount;
           });
         } else if (state is CouponInvalid) {
+          log(state.message);
           setState(() {
             discount = 0;
           });
@@ -83,6 +87,7 @@ class _ChooseTicketFooterState extends State<ChooseTicketFooter> {
                     if (keystate.currentState!.validate()) {
                       context.read<PostBloc>().add(
                         CouponStatusCheck(
+                          postName: widget.postName,
                           totalPrice: originalTotal,
                           couponCode: controller.text,
                         ),
@@ -149,6 +154,7 @@ class _ChooseTicketFooterState extends State<ChooseTicketFooter> {
                         );
                         context.read<PostBloc>().add(
                           PaymentIntiate(
+                            organizerData: widget.organizerData,
                             couponCode: controller.text,
                             userData: widget.userData,
                             totalPrice: discountedTotal,

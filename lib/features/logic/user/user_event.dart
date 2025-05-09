@@ -53,3 +53,10 @@ class EventRegisterClicked extends UserEvent {
 
   EventRegisterClicked({required this.userData});
 }
+
+class Chat extends UserEvent {
+  final UserDataModel userData;
+  final ChatData chat;
+
+  Chat({required this.userData, required this.chat});
+}

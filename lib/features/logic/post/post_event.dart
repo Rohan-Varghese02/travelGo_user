@@ -42,18 +42,25 @@ class DecrementTicket extends PostEvent {
 }
 
 class CouponStatusCheck extends PostEvent {
+  final String postName;
   final int totalPrice;
   final String couponCode;
 
-  CouponStatusCheck({required this.totalPrice, required this.couponCode});
+  CouponStatusCheck({
+    required this.totalPrice,
+    required this.couponCode,
+    required this.postName,
+  });
 }
 
 class PaymentIntiate extends PostEvent {
+  final OrganizerDataModel organizerData;
   final String? couponCode;
   final UserDataModel userData;
   final int totalPrice;
   final PaymentModel paymentData;
   PaymentIntiate({
+    required this.organizerData,
     this.couponCode,
     required this.userData,
     required this.totalPrice,

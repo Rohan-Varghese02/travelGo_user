@@ -57,3 +57,10 @@ class NavigateEventRegistered extends UserState {
 
   NavigateEventRegistered({required this.userData});
 }
+
+class NavigateToChat extends UserState {
+  final ChatData chat;
+  final UserDataModel userData;
+
+  NavigateToChat({required this.chat, required this.userData});
+}

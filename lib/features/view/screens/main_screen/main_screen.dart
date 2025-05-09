@@ -19,7 +19,7 @@ class MainScreen extends StatelessWidget {
       BlogPage(),
       JournalPage(),
       HomePage(userdata: userdata),
-      ChatPage(),
+      ChatPage(userid: userdata.uid,userData: userdata,),
       ProfilePage(),
     ];
     return BlocBuilder<NavBloc, NavState>(
