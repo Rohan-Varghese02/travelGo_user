@@ -10,10 +10,25 @@ import 'package:travelgo_user/features/view/screens/pages/chat_page/widgets/chat
 import 'package:travelgo_user/features/view/screens/pages/chat_page/widgets/message_tile.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
-class ChatDetailedPage extends StatelessWidget {
+class ChatDetailedPage extends StatefulWidget {
   final UserDataModel userData;
   final ChatData chatData;
   ChatDetailedPage({super.key, required this.userData, required this.chatData});
+
+  @override
+  State<ChatDetailedPage> createState() => _ChatDetailedPageState();
+}
+
+class _ChatDetailedPageState extends State<ChatDetailedPage> {
+  @override
+  void initState() {
+    super.initState();
+    ChatServices().updateSeen(
+      Timestamp.now(),
+      widget.chatData.organizerUid,
+      widget.userData.uid,
+    );
+  }
 
   TextEditingController messageController = TextEditingController();
 
@@ -44,22 +59,22 @@ class ChatDetailedPage extends StatelessWidget {
   void sendMessage() async {
     if (messageController.text.isNotEmpty) {
       await ChatServices().sendMessage(
-        chatData.organizerUid,
+        widget.chatData.organizerUid,
         messageController.text,
-        userData.uid,
-        userData.email,
+        widget.userData.uid,
+        widget.userData.email,
       );
       await ChatServices().updateMessageandTime(
         messageController.text,
         Timestamp.now(),
-        userData.uid,
-        chatData.organizerUid,
+        widget.userData.uid,
+        widget.chatData.organizerUid,
       );
       await ChatServices().updateMessageandTimeOrganizer(
         messageController.text,
         Timestamp.now(),
-        userData.uid,
-        chatData.organizerUid,
+        widget.userData.uid,
+        widget.chatData.organizerUid,
       );
       messageController.clear();
     }
@@ -67,13 +82,13 @@ class ChatDetailedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String senderID = userData.uid;
-    String recieverID = chatData.organizerUid;
+    String senderID = widget.userData.uid;
+    String recieverID = widget.chatData.organizerUid;
     return Scaffold(
       appBar: ChatCustomAppBar(
-        title: chatData.organizerName,
+        title: widget.chatData.organizerName,
         color: white,
-        picUrl: chatData.organizerImage,
+        picUrl: widget.chatData.organizerImage,
         backgroundColor: themeColor,
         showBack: true,
       ),
@@ -124,7 +139,7 @@ class ChatDetailedPage extends StatelessWidget {
                         if (index == counter) {
                           return MessageTile(
                             message: msg,
-                            currentUser: userData.uid,
+                            currentUser: widget.userData.uid,
                           );
                         }
                         counter++;

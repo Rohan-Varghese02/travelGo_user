@@ -6,7 +6,7 @@ final innerTheme = Color(0xFF1565C0);
 final lightTheme = Color(0xFF90CAF9);
 final lightOpacityTheme = Color.fromARGB(149, 144, 202, 249);
 final redeError = Color.fromARGB(255, 252, 21, 0);
-
+final success = Color.fromARGB(255, 0, 255, 21);
 final grey50 = Color(0xff808080);
 final black = Color(0xff1a1a1a);
 

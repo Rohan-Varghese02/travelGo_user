@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:travelgo_user/core/services/firestore_services.dart';
 import 'package:travelgo_user/data/models/message_data.dart';
 
 class ChatServices {
@@ -19,13 +18,6 @@ class ChatServices {
     List<String> id = [currentUserID, recieverID];
     id.sort(); // this is to have same id for both receiver and sender
     String chatRoomID = id.join('_');
-
-    // add new message to database
-    // firebaseFirestore
-    //     .collection('chat_rooms')
-    //     .doc(chatRoomID)
-    //     .collection('message')
-    //     .add(newMessage.toMap());
     final docId =
         firebaseFirestore
             .collection('chat_rooms')
@@ -96,6 +88,20 @@ class ChatServices {
           'lastMessage': message,
           'lastMessageTime': Timestamp.now(),
           'lastMessagebool': false,
+        });
+  }
+    Future<void> updateSeen(
+    Timestamp time,
+    String organizerUid,
+    userUid,
+  ) {
+    return FirebaseFirestore.instance
+        .collection('OrganizerChatrooms')
+        .doc(userUid)
+        .collection('Organizers')
+        .doc(organizerUid)
+        .update({
+          'lastMessageBool': true,
         });
   }
 }

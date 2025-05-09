@@ -14,7 +14,6 @@ class ChatTile extends StatelessWidget {
       'HH:mm',
     ).format(chatData.lastMessageTime.toDate());
 
-    double width = MediaQuery.of(context).size.width;
     return Container(
       decoration: BoxDecoration(border: Border.all(width: 1, color: grey20)),
       child: ListTile(
@@ -29,7 +28,10 @@ class ChatTile extends StatelessWidget {
                   text: chatData.lastMessage,
                   fontWeight: FontWeight.bold,
                 ),
-        trailing: StyleText(text: timeText),
+        trailing:
+            chatData.lastMessageBool
+                ? StyleText(text: timeText)
+                : Icon(Icons.circle_notifications, color: success),
       ),
     );
   }
