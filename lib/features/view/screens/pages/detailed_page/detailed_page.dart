@@ -13,6 +13,7 @@ import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/event_details.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/event_pic.dart';
 import 'package:travelgo_user/features/view/screens/pages/detailed_page/widgets/organizer_panel.dart';
+import 'package:travelgo_user/features/view/screens/pages/organizer_detail_page/organizer_detail_page.dart';
 
 class DetailedPage extends StatefulWidget {
   final UserDataModel userData;
@@ -78,8 +79,14 @@ class _DetailedPageState extends State<DetailedPage> {
                   ? OrganizerPanel(
                     organizerData: organizerData!,
                     onTap: () {
-                      log(widget.post.tickets.length.toString());
-                      log('Follow pressed');
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder:
+                              (context) => OrganizerDetailPage(
+                                organizerData: organizerData!,
+                              ),
+                        ),
+                      );
                     },
                   )
                   : Padding(

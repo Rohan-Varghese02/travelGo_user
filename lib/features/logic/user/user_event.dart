@@ -60,3 +60,9 @@ class Chat extends UserEvent {
 
   Chat({required this.userData, required this.chat});
 }
+
+class OrganizerFollowingTile extends UserEvent {
+  final UserDataModel userData;
+
+  OrganizerFollowingTile({required this.userData});
+}

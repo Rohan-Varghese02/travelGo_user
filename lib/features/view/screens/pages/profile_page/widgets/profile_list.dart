@@ -41,7 +41,11 @@ class ProfileList extends StatelessWidget {
           BorderedListTile(
             title: 'Organizers Following',
             leadingIcon: FontAwesomeIcons.users,
-            onTap: () {},
+            onTap: () {
+              context.read<UserBloc>().add(
+                OrganizerFollowingTile(userData: userData),
+              );
+            },
           ),
           BorderedListTile(
             title: 'Payment and Payouts',

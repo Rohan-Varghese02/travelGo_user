@@ -64,3 +64,9 @@ class NavigateToChat extends UserState {
 
   NavigateToChat({required this.chat, required this.userData});
 }
+
+class NavigateToOrganizerFollow extends UserState {
+  final UserDataModel userData;
+
+  NavigateToOrganizerFollow({required this.userData});
+}

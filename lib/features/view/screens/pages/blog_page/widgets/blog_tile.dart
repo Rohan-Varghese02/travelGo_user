@@ -19,7 +19,14 @@ class BlogTile extends StatelessWidget {
           SizedBox(width: 10),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(color: themeColor),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
+                color: themeColor,
+              ),
               padding: EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

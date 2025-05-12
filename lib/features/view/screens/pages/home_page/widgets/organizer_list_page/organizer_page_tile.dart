@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
+import 'package:travelgo_user/features/view/screens/pages/organizer_detail_page/organizer_detail_page.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class OrganizerPageTile extends StatelessWidget {
@@ -41,14 +42,27 @@ class OrganizerPageTile extends StatelessWidget {
             color: themeColor,
           ),
           SizedBox(height: 10),
-          Container(
-            width: 100,
-            height: 30,
-            decoration: BoxDecoration(
-              color: themeColor,
-              borderRadius: BorderRadius.circular(15),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder:
+                      (context) =>
+                          OrganizerDetailPage(organizerData: organizerData),
+                ),
+              );
+            },
+            child: Container(
+              width: 100,
+              height: 30,
+              decoration: BoxDecoration(
+                color: themeColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Center(
+                child: StyleText(text: 'View Profile', color: white),
+              ),
             ),
-            child: Center(child: StyleText(text: 'Follow', color: white)),
           ),
         ],
       ),

@@ -11,7 +11,11 @@ class OrganizerListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'Organizer List', color: themeColor),
+      appBar: CustomAppBar(
+        title: 'Organizer List',
+        color: themeColor,
+        showBack: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: StreamBuilder(
@@ -32,7 +36,7 @@ class OrganizerListPage extends StatelessWidget {
 
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, 
+                crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 childAspectRatio: 0.8,

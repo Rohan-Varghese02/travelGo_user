@@ -115,7 +115,8 @@ class FirestoreService {
     organizerImage,
     organizerName,
     userId,
-    lastMessage, Timestamp lastMessageTime
+    lastMessage,
+    Timestamp lastMessageTime,
   ) async {
     return firestore
         .collection('OrganizerChatrooms')
@@ -126,10 +127,9 @@ class FirestoreService {
           'organizerUid': organizerUid,
           'organizerImage': organizerImage,
           'organizerName': organizerName,
-          'lastMessage':lastMessage,
-          'lastMessageTime':Timestamp.now(),
-                    'lastMessageBool':true,
-
+          'lastMessage': lastMessage,
+          'lastMessageTime': Timestamp.now(),
+          'lastMessageBool': true,
         });
   }
 
@@ -138,7 +138,8 @@ class FirestoreService {
     userImage,
     userName,
     organizerUid,
-    lastMessage, Timestamp lastMessageTime
+    lastMessage,
+    Timestamp lastMessageTime,
   ) async {
     return firestore
         .collection('UserChatrooms')
@@ -149,9 +150,20 @@ class FirestoreService {
           'userUid': userUid,
           'userImage': userImage,
           'userName': userName,
-           'lastMessage':lastMessage,
-          'lastMessageTime':Timestamp.now(),
-          'lastMessagebool':true,
+          'lastMessage': lastMessage,
+          'lastMessageTime': Timestamp.now(),
+          'lastMessagebool': true,
         });
+  }
+
+  Future<void> removeOrganizer(String userUid, organizerUid) async {
+    await firestore
+        .collection('Users')
+        .doc(userUid)
+        .collection('following')
+        .doc(organizerUid)
+        .delete();
+    final organizerRef = firestore.collection('Organizers').doc(organizerUid);
+    await organizerRef.update({'followers': FieldValue.increment(-1)});
   }
 }

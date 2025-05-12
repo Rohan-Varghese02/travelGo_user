@@ -59,7 +59,7 @@ class OrganizerPanel extends StatelessWidget {
                   ),
                   child: Center(
                     child: StyleText(
-                      text: 'Follow',
+                      text: 'View Profile',
                       fontWeight: FontWeight.bold,
                       color: white,
                     ),

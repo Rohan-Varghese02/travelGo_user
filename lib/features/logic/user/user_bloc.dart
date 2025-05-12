@@ -28,6 +28,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<PaymentAndPayoutClicked>(paymentAndPayoutClicked);
     // event Registered
     on<EventRegisterClicked>(eventRegisterClicked);
+    on<OrganizerFollowingTile>(organizerFollowingTile);
     // Navigate to chat
     on<Chat>(chat);
   }
@@ -140,5 +141,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   FutureOr<void> chat(Chat event, Emitter<UserState> emit) {
     emit(NavigateToChat(chat: event.chat, userData: event.userData));
+  }
+
+  FutureOr<void> organizerFollowingTile(
+    OrganizerFollowingTile event,
+    Emitter<UserState> emit,
+  ) {
+    emit(NavigateToOrganizerFollow(userData: event.userData));
   }
 }
