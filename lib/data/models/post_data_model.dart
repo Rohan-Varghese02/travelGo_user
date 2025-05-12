@@ -17,7 +17,7 @@ class PostDataModel {
   final double longitude;
   final String category;
   final DateTime timestamp;
-  final bool isFeatured; 
+  final bool isFeatured;
   PostDataModel({
     required this.postId,
     required this.timestamp,
@@ -35,7 +35,7 @@ class PostDataModel {
     required this.latitude,
     required this.longitude,
     required this.category,
-    this.isFeatured = false, 
+    this.isFeatured = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -62,7 +62,7 @@ class PostDataModel {
 
   factory PostDataModel.fromMap(Map<String, dynamic> map, String documentId) {
     return PostDataModel(
-      postId: documentId , // Assign doc ID manually
+      postId: documentId, // Assign doc ID manually
       uid: map['uid'] ?? '',
       name: map['name'] ?? '',
       description: map['description'] ?? '',
@@ -101,7 +101,7 @@ class PostDataModel {
               : DateTime.now(),
     );
   }
-   factory PostDataModel.fromFirestore(DocumentSnapshot doc) {
+  factory PostDataModel.fromFirestore(DocumentSnapshot doc) {
     final map = doc.data() as Map<String, dynamic>;
     return PostDataModel.fromMap(map, doc.id);
   }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/user/user_bloc.dart';
+import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/wishlist/wishlist.dart';
 import 'package:travelgo_user/features/view/widgets/border_list_tile.dart';
 
 class ProfileList extends StatelessWidget {
@@ -27,7 +28,13 @@ class ProfileList extends StatelessWidget {
           BorderedListTile(
             title: 'Wishlist',
             leadingIcon: FontAwesomeIcons.bookmark,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => WishlistPage(userData: userData),
+                ),
+              );
+            },
           ),
           BorderedListTile(
             title: 'Event Registered',

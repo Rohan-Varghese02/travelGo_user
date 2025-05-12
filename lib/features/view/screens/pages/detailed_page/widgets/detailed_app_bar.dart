@@ -4,12 +4,12 @@ import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class DetailedAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String postname;
-  final String category;
+  final bool isFavorite;
+  final void Function()? onFavoriteToggle;
   const DetailedAppBar({
     super.key,
-    required this.postname,
-    required this.category,
+    required this.isFavorite,
+    required this.onFavoriteToggle,
   });
 
   @override
@@ -30,8 +30,11 @@ class DetailedAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: themeColor,
       actions: [
         IconButton(
-          onPressed: () {},
-          icon: Icon(FontAwesomeIcons.heart, color: white),
+          onPressed: onFavoriteToggle,
+          icon:
+              isFavorite
+                  ? Icon(FontAwesomeIcons.solidHeart, color: redeError)
+                  : Icon(FontAwesomeIcons.heart, color: white),
         ),
       ],
     );

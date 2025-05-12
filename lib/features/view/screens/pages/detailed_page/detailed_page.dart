@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:travelgo_user/core/services/favorite_service.dart';
 import 'package:travelgo_user/data/models/organizer_data.dart';
 import 'package:travelgo_user/data/models/post_data_model.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
@@ -25,12 +26,38 @@ class DetailedPage extends StatefulWidget {
 }
 
 class _DetailedPageState extends State<DetailedPage> {
+  bool isFavorite = false;
+
   @override
   void initState() {
     super.initState();
     context.read<PostBloc>().add(FetchOrganizerDetails(uid: widget.post.uid));
+    checkFavoriteStatus();
+
     log(widget.post.uid);
     WidgetsBinding.instance.addPostFrameCallback((_) {});
+  }
+
+  void checkFavoriteStatus() async {
+    isFavorite = await FavoritesService.isFavorite(
+      widget.userData.uid,
+      widget.post.postId,
+    );
+    setState(() {});
+  }
+
+  void toggleFavorite() async {
+    if (isFavorite) {
+      await FavoritesService.removeFromFavorites(
+        widget.userData.uid,
+        widget.post.postId,
+      );
+    } else {
+      await FavoritesService.addToFavorites(widget.userData.uid, widget.post);
+    }
+    setState(() {
+      isFavorite = !isFavorite;
+    });
   }
 
   OrganizerDataModel? organizerData;
@@ -66,8 +93,8 @@ class _DetailedPageState extends State<DetailedPage> {
       },
       child: Scaffold(
         appBar: DetailedAppBar(
-          postname: widget.post.name,
-          category: widget.post.category,
+          onFavoriteToggle: toggleFavorite,
+          isFavorite: isFavorite,
         ),
         body: SingleChildScrollView(
           child: Column(
