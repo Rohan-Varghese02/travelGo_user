@@ -16,62 +16,70 @@ class HomeCategory extends StatelessWidget {
       stream: StreamServices().categoryStream(),
       builder: (context, snapshot) {
         if (!snapshot.hasData || snapshot.data == null) {
-          return Center(child: StyleText(text: 'No Category'));
+          return const Center(child: StyleText(text: 'No Category'));
         }
-        final category = snapshot.data;
+
+        final categoryList = snapshot.data!;
         return ListView.separated(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: category!.length,
+          itemCount: categoryList.length,
           itemBuilder: (context, index) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            final categoryName = categoryList[index].name;
+            return StreamBuilder(
+              stream: StreamServices().getPostCategory(categoryName),
+              builder: (context, postSnapshot) {
+                final posts = postSnapshot.data;
+
+                if (!postSnapshot.hasData || posts == null || posts.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StyleText(
-                      text: category[index].name,
-                      fontWeight: FontWeight.bold,
-                      size: 24,
-                      color: black,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder:
-                                (context) => ViewMore(
-                                  stream: StreamServices().getPostCategory(
-                                    category[index].name,
-                                  ),
-                                  headline: category[index].name,
-                                  userdata: userdata,
-                                ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        StyleText(
+                          text: categoryName,
+                          fontWeight: FontWeight.bold,
+                          size: 24,
+                          color: black,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder:
+                                    (context) => ViewMore(
+                                      stream: StreamServices().getPostCategory(
+                                        categoryName,
+                                      ),
+                                      headline: categoryName,
+                                      userdata: userdata,
+                                    ),
+                              ),
+                            );
+                          },
+                          child: StyleText(
+                            text: 'View more',
+                            fontWeight: FontWeight.w300,
+                            color: themeColor,
+                            size: 13,
+                            decoration: TextDecoration.underline,
                           ),
-                        );
-                      },
-                      child: StyleText(
-                        text: 'View more',
-                        fontWeight: FontWeight.w300,
-                        color: themeColor,
-                        size: 13,
-                        decoration: TextDecoration.underline,
-                      ),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 10),
+                    CategoryTile(category: categoryName, userdata: userdata),
                   ],
-                ),
-                SizedBox(height: 10),
-                CategoryTile(
-                  category: category[index].name,
-                  userdata: userdata,
-                ),
-              ],
+                );
+              },
             );
           },
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(height: 10);
-          },
+          separatorBuilder: (_, __) => const SizedBox(height: 10),
         );
       },
     );
