@@ -1,4 +1,3 @@
-// journal_entry_page.dart
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:travelgo_user/features/view/screens/pages/journal_page/widgets/j
 import 'package:travelgo_user/features/view/widgets/custom_app_bar.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text_field.dart';
 import 'package:travelgo_user/features/view/widgets/square_elevated_btn.dart';
+import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class JournalEntryPage extends StatefulWidget {
   final bool isEditing;
@@ -62,12 +62,23 @@ class _JournalEntryPageState extends State<JournalEntryPage> {
     }
   }
 
+  void _showSnack(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: StyleText(text: message, color: white),
+        backgroundColor: redeError,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
   void _saveEntry() {
-    if (_images.isEmpty ||
-        titleController.text.trim().isEmpty ||
-        descController.text.trim().isEmpty) {
-      return;
-    }
+    final title = titleController.text.trim();
+    final desc = descController.text.trim();
+
+    if (_images.isEmpty) return _showSnack('Please add at least one photo');
+    if (title.isEmpty) return _showSnack('Title cannot be empty');
+    if (desc.isEmpty) return _showSnack('Description cannot be empty');
 
     final entry = JournalEntry(
       imagePaths: _images.map((x) => x.path).toList(),

@@ -10,6 +10,7 @@ import 'package:travelgo_user/features/logic/user/user_bloc.dart';
 import 'package:travelgo_user/features/view/screens/pages/journal_page/journal_detailed_page.dart';
 import 'package:travelgo_user/features/view/screens/pages/journal_page/journal_entry_page.dart';
 import 'package:travelgo_user/features/view/screens/pages/journal_page/widgets/journal_app_bar.dart';
+import 'package:travelgo_user/features/view/screens/pages/journal_page/widgets/journal_delete_dailog.dart';
 import 'package:travelgo_user/features/view/widgets/style_text.dart';
 
 class JournalPage extends StatelessWidget {
@@ -69,9 +70,10 @@ class JournalPage extends StatelessWidget {
                           IconButton(
                             icon: Icon(Icons.delete, color: redeError),
                             onPressed: () {
-                              context.read<JournalBloc>().add(
-                                DeleteJournalEntry(key),
-                              );
+                              journalDeleteDailog(context, entry.title, key);
+                              // context.read<JournalBloc>().add(
+                              //   DeleteJournalEntry(key),
+                              // );
                             },
                           ),
                         ],
