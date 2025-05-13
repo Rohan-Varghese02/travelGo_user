@@ -45,12 +45,15 @@ class CountryCustomTile extends StatelessWidget {
                         size: 10,
                       ),
                     ),
+                    SizedBox(height: 5),
                     StyleText(
                       text: post.name,
-                      size: 20,
+                      size: 17,
                       color: black,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.bold,
                     ),
+                    SizedBox(height: 5),
+
                     Row(
                       children: [
                         Image(

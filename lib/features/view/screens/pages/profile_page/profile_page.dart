@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:travelgo_user/features/logic/user/user_bloc.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/event_registered/event_register.dart';
-import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/full_profile/full_profile.dart';
+import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/edit_profile/edit_profile.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/organizers_following/organizer_following.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/payment_and_payouts/payment_page.dart';
 import 'package:travelgo_user/features/view/screens/pages/profile_page/widgets/profile_app_bar.dart';

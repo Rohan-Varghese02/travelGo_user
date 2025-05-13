@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:travelgo_user/core/constants/colors.dart';
 import 'package:travelgo_user/data/models/user_data.dart';
 import 'package:travelgo_user/features/logic/user/user_bloc.dart';
-import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/full_profile/widgets/profile_avatar.dart';
+import 'package:travelgo_user/features/view/screens/pages/profile_page/page_tiles/edit_profile/widgets/profile_avatar.dart';
 import 'package:travelgo_user/features/view/widgets/custom_app_bar.dart';
 import 'package:travelgo_user/features/view/widgets/heading_text_field.dart';
 
@@ -34,12 +34,13 @@ class _FullProfileState extends State<FullProfile> {
       appBar: CustomAppBar(
         title: 'Edit Profile',
         color: themeColor,
+        showBack: true,
         actions: [
           IconButton(
             onPressed: () {
               context.read<UserBloc>().add(ProfileUpdatIntiate());
             },
-            icon: Icon(FontAwesomeIcons.floppyDisk),
+            icon: Icon(FontAwesomeIcons.floppyDisk, color: themeColor),
           ),
         ],
       ),

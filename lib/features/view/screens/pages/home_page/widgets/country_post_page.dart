@@ -10,12 +10,20 @@ import 'package:travelgo_user/features/view/widgets/style_text.dart';
 class CountryPostPage extends StatelessWidget {
   final UserDataModel userData;
   final String nameOfCountry;
-  const CountryPostPage({super.key, required this.nameOfCountry, required this.userData});
+  const CountryPostPage({
+    super.key,
+    required this.nameOfCountry,
+    required this.userData,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: nameOfCountry, color: themeColor),
+      appBar: CustomAppBar(
+        title: nameOfCountry,
+        color: themeColor,
+        showBack: true,
+      ),
       body: StreamBuilder(
         stream: StreamServices().getPostCategoryCountry(nameOfCountry),
         builder: (context, snapshot) {
