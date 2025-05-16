@@ -1,4 +1,4 @@
-# 🎉 TravLGO
+#  TravLGO
 
 **TravLGO** is a powerful and user-friendly **event booking application** built with **Flutter**. It enables users to explore events, book tickets, receive reminders, interact in real-time with organizers or other attendees, and even join virtual sessions—all in one seamless app.
 
@@ -25,14 +25,12 @@ Whether it's attending a live concert or joining a virtual workshop, TravLGO bri
 
 ## ✨ Features
 
-- 🔍 **Browse Events** – Explore upcoming events by category or location  
-- 🎫 **Ticket Booking** – Reserve spots and confirm your presence instantly  
-- 🔔 **Reminders** – Never miss an event with timely push notifications  
-- 💬 **Real-Time Chat** – Connect with organizers or other attendees using WebSockets  
-- 💳 **Secure Payments** – Integrated Razorpay for smooth ticket transactions  
-- 📅 **Event Calendar** – Track your bookings using an intuitive calendar UI  
-- 🎥 **Virtual Sessions** – Join live online events using Agora video calls  
-- 🔒 **Secure Storage** – Store sensitive data securely using Flutter Secure Storage  
+- **Browse Events** – Explore upcoming events by category or location  
+- **Ticket Booking** – Reserve spots and confirm your presence instantly  
+- **Reminders** – Never miss an event with timely push notifications  
+- **Real-Time Chat** – Connect with organizers or other attendees using WebSockets  
+- **Secure Payments** – Integrated Razorpay for smooth ticket transactions  
+- **Ticket Collection** – Track your bookings  
 
 ---
 
@@ -41,14 +39,10 @@ Whether it's attending a live concert or joining a virtual workshop, TravLGO bri
 - **Flutter** – Cross-platform UI toolkit  
 - **Dart** – Language for building apps with Flutter  
 - **BLoC** – Predictable state management with `flutter_bloc`  
-- **Flutter Secure Storage** – For handling sensitive data locally  
 - **HTTP** – For RESTful API interactions  
-- **Socket.IO** – For real-time communication  
-- **Agora RTC/RTM** – For video and real-time messaging  
-- **Razorpay Flutter** – Seamless payment gateway integration  
-- **TableCalendar** – Beautiful calendar UI  
+- **Stripe Flutter** – Seamless payment gateway integration  
 - **Lottie Animations** – For delightful UI/UX  
-- **Firebase Core** – Backend services integration (if used)
+- **Firebase Core** – Backend services integration
 
 ---
 
