@@ -56,7 +56,7 @@ dependencies:
   dart_jsonwebtoken: ^2.14.1
   table_calendar: ^3.1.3
   intl: ^0.19.0
-  razorpay_flutter: ^1.3.7
+  stripe_flutter: ^1.3.7
   permission_handler: ^11.3.1
   agora_rtc_engine: ^6.5.0
   socket_io_client: ^3.0.2
