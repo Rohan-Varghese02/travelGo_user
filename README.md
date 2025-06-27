@@ -48,20 +48,31 @@ Whether it's attending a live concert or joining a virtual workshop, TravLGO bri
 
 ```yaml
 dependencies:
-  flutter_bloc: ^8.1.6
-  http: ^1.2.2
-  flutter_secure_storage: ^9.2.2
-  dart_jsonwebtoken: ^2.14.1
-  table_calendar: ^3.1.3
-  intl: ^0.19.0
-  stripe_flutter: ^1.3.7
-  permission_handler: ^11.3.1
-  agora_rtc_engine: ^6.5.0
-  socket_io_client: ^3.0.2
-  flutter_markdown: ^0.7.4+3
+  bloc: ^9.0.0
+  build_runner: ^2.4.15
+  buttons_tabbar: ^1.3.15
+  carousel_slider: ^5.0.0
+  cloud_firestore: ^5.6.5
+  crypto: ^3.0.6
+  cupertino_icons: ^1.0.8
+  dio: ^5.8.0+1
+  dotted_border: ^2.1.0
+  firebase_auth: ^5.5.1
+  firebase_core: ^3.12.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.0
+  flutter_stripe: ^11.5.0
+  flutter_svg: ^2.0.17
+  font_awesome_flutter: ^10.8.0
+  google_fonts: ^6.2.1
+  google_nav_bar: ^5.0.7
+  google_sign_in: ^6.3.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  hive_generator: ^2.0.1
+  http: ^1.3.0
   image_picker: ^1.1.2
-  http_parser: ^4.0.2
-  lottie: ^3.1.3
-  agora_rtm: ^1.5.9
-  flutter_launcher_icons: ^0.14.3
-  firebase_core: ^3.4.0
+  intl: ^0.20.2
+  lottie: ^3.3.1
+  shared_preferences: ^2.5.3
