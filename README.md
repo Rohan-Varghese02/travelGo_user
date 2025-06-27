@@ -9,9 +9,7 @@
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Dependencies](#dependencies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
+
 
 ---
 
